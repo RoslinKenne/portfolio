@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html class="dark" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta property="og:title" content="Zoyem Roslin Kenne - Portfolio Cybersécurité & Dév">
+    <meta property="og:description" content="Étudiant à l'UQTR spécialisé en Cyber Sécurité, Cloud et Développement. Découvrez mes projets et mon parcours.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://roslinkenne.github.io/site-portefolio/">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80">
+
+    <title>Zoyem Roslin Kenne - Portfolio</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1" rel="stylesheet"/>
+    
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3B82F6", 
+                        "secondary": "#8B5CF6", 
+                        "bg-dark": "#0B0F19", 
+                        "bg-card": "#111827", 
+                        "border-color": "#1F2937",
+                        "text-main": "#F3F4F6",
+                        "text-muted": "#9CA3AF"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <style>
+        html { scroll-behavior: smooth; }
+        body { background-color: #0B0F19; color: #F3F4F6; }
+        
+        /* Texture de fond */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        
+        /* Effet de lueur */
+        .glow-effect {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        
+        /* Animations Fade-in */
+        .fade-in-up { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .visible { opacity: 1; transform: translateY(0); }
+        
+        /* Curseur machine à écrire */
+        .cursor-blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0B0F19; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3B82F6; }
+    </style>
+</head>
+
+<body class="font-display overflow-x-hidden bg-grid">
+    
+    <div class="glow-effect"></div>
+
+    <div class="relative z-10 flex h-auto min-h-screen w-full flex-col">
+        
+        <header class="sticky top-0 z-50 border-b border-white/5 bg-bg-dark/80 backdrop-blur-xl transition-all duration-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex h-16 items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/20 text-primary ring-1 ring-primary/50">
+                            <span class="material-symbols-outlined">security</span>
+                        </div>
+                        <span class="text-lg font-bold tracking-tight text-white">Zoyem R.K.</span>
+                    </div>
+                    
+                    <nav class="hidden md:flex items-center gap-8">
+                        <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#hero">Accueil</a>
+                        <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#about">À Propos</a>
+                        <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#skills">Compétences</a>
+                        <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#education">Formation</a>
+                        <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#projects">Projets</a>
+                        <a href="#contact" class="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-primary/25 hover:bg-blue-600 transition-all hover:scale-105">
+                            Contact
+                        </a>
+                    </nav>
+
+                    <button class="md:hidden text-white">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow">
+            
+            <section id="hero" class="relative py-24 sm:py-32 lg:py-40 px-4 text-center">
+                <div class="mx-auto max-w-5xl">
+                    <div class="fade-in-up mx-auto mb-6 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur">
+                        <span class="relative flex h-2 w-2">
+                          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                          <span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+                        </span>
+                        <p class="text-xs font-medium text-white">Recherche stage Cyber/Cloud - Été 2026</p>
+                    </div>
+                    
+                    <h1 class="fade-in-up text-4xl font-black tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl mb-6 h-24 sm:h-auto">
+                        Zoyem Roslin Kenne <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary" id="typewriter"></span><span class="text-primary cursor-blink">|</span>
+                    </h1>
+                    
+                    <p class="fade-in-up mx-auto max-w-3xl text-lg text-text-muted mb-8 leading-relaxed">
+                        Étudiant en informatique à l'UQTR. Je combine une expertise en programmation (C#, Python, Java) avec des compétences avancées en défense d'infrastructure et infonuagique.
+                    </p>
+                    
+                    <div class="fade-in-up flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a href="#projects" class="w-full sm:w-auto rounded-xl bg-primary px-8 py-4 text-base font-bold text-white shadow-lg shadow-primary/25 hover:bg-blue-600 transition-all hover:-translate-y-1">
+                            Voir mes projets
+                        </a>
+                        <a href="#contact" class="w-full sm:w-auto rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-base font-bold text-white hover:bg-white/10 transition-all">
+                            Télécharger CV
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="py-20 border-y border-white/5 bg-white/[0.02]">
+                <div class="mx-auto max-w-4xl px-4">
+                    <div class="mb-8 text-center">
+                        <h2 class="text-3xl font-bold tracking-tight text-white">À Propos de Moi</h2>
+                    </div>
+                    <div class="space-y-4 text-text-muted leading-relaxed text-center text-lg">
+                        <p>
+                            Je suis <strong>Zoyem Roslin Kenne</strong>, étudiant en informatique à l'Université du Québec à Trois-Rivières (UQTR).
+                        </p>
+                        <p>
+                            Mon expertise couvre plusieurs langages de programmation, dont <strong>Python, Java, C#, PHP, et JavaScript</strong>, ainsi que des frameworks comme React et Node.js. En cybersécurité, je me spécialise dans l'analyse des vulnérabilités, la protection des données et la sécurisation des infrastructures, avec une maîtrise d'outils comme <strong>Wireshark et Nmap</strong>.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills" class="py-20 border-b border-white/5">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="mb-16 text-center">
+                        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Arsenal Technique</h2>
+                        <p class="mt-4 text-text-muted">Compétences techniques clés et outils maîtrisés.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                        <div class="fade-in-up group relative rounded-2xl border border-white/10 bg-bg-card p-6 hover:border-primary/50 transition-colors">
+                            <div class="mb-4 h-32 w-full overflow-hidden rounded-lg bg-blue-500/10">
+                                <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=400&q=80" alt="Code Développement" class="h-full w-full object-cover">
+                            </div>
+                            <h3 class="text-lg font-bold text-white">Développement</h3>
+                            <p class="mt-2 text-sm text-text-muted">C#, Python, Java, React, Node.js, PHP, Git, VS Code, XML.</p>
+                        </div>
+
+                        <div class="fade-in-up group relative rounded-2xl border border-white/10 bg-bg-card p-6 hover:border-primary/50 transition-colors">
+                            <div class="mb-4 h-32 w-full overflow-hidden rounded-lg bg-red-500/10">
+                                <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=400&q=80" alt="Cybersécurité Cadenas" class="h-full w-full object-cover">
+                            </div>
+                            <h3 class="text-lg font-bold text-white">Cyber Sécurité</h3>
+                            <p class="mt-2 text-sm text-text-muted">Durcissement Linux, Contrôle d'accès (MFA), Logs, OWASP.</p>
+                        </div>
+
+                        <div class="fade-in-up group relative rounded-2xl border border-white/10 bg-bg-card p-6 hover:border-primary/50 transition-colors">
+                            <div class="mb-4 h-32 w-full overflow-hidden rounded-lg bg-green-500/10">
+                                <img src="https://www.larochellegc.com/wp-content/uploads/2020/06/Infonuagique_ce_que_c_est.jpg" alt="Data Center Serveurs" class="h-full w-full object-cover">
+                            </div>
+                            <h3 class="text-lg font-bold text-white">Infonuagique</h3>
+                            <p class="mt-2 text-sm text-text-muted">AWS, Azure, GCP, Docker, Virtualisation (VM).</p>
+                        </div>
+
+                        <div class="fade-in-up group relative rounded-2xl border border-white/10 bg-bg-card p-6 hover:border-primary/50 transition-colors">
+                            <div class="mb-4 h-32 w-full overflow-hidden rounded-lg bg-purple-500/10">
+                                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=400&q=80" alt="Câbles Réseau" class="h-full w-full object-cover">
+                            </div>
+                            <h3 class="text-lg font-bold text-white">Réseaux</h3>
+                            <p class="mt-2 text-sm text-text-muted">TCP/IP, DNS, VPN, Pare-feu, Analyse Wireshark.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="education" class="py-20 px-4 bg-white/[0.02]">
+                <div class="mx-auto max-w-4xl">
+                    <h2 class="text-3xl font-bold tracking-tight text-white mb-12 text-center">Ma Formation</h2>
+                    <div class="space-y-8">
+                        <div class="fade-in-up relative flex gap-6">
+                            <div class="absolute left-[19px] top-10 bottom-[-40px] w-0.5 bg-white/10"></div>
+                            <div class="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-bg-card border border-primary text-primary">
+                                <span class="material-symbols-outlined text-sm">school</span>
+                            </div>
+                            <div class="flex-auto rounded-2xl border border-white/10 bg-bg-card p-6">
+                                <h3 class="text-lg font-bold text-white">Baccalauréat en Informatique</h3>
+                                <p class="text-sm text-primary mb-2">Université du Québec à Trois-Rivières (UQTR) | 2023 - En cours</p>
+                                <p class="text-sm text-text-muted">Cours pertinents : Réseaux informatiques, Systèmes d'exploitation, Sécurité informatique, Virtualisation / Cloud.</p>
+                            </div>
+                        </div>
+                        <div class="fade-in-up relative flex gap-6">
+                             <div class="absolute left-[19px] top-10 bottom-[-40px] w-0.5 bg-white/10"></div>
+                            <div class="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-bg-card border border-green-500 text-green-500">
+                                <span class="material-symbols-outlined text-sm">verified</span>
+                            </div>
+                            <div class="flex-auto rounded-2xl border border-white/10 bg-bg-card p-6">
+                                <h3 class="text-lg font-bold text-white">Certifications Professionnelles</h3>
+                                <ul class="list-disc list-inside text-sm text-text-muted mt-2">
+                                    <li>Google Cybersecurity Professional Certificate</li>
+                                    <li>Google IT Support Professional Certificate</li>
+                                    <li>CompTIA Security+ (En cours)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="fade-in-up relative flex gap-6">
+                            <div class="absolute left-[19px] top-10 bottom-[-40px] w-0.5 bg-white/10"></div>
+                            <div class="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-bg-card border border-secondary text-secondary">
+                                <span class="material-symbols-outlined text-sm">build</span>
+                            </div>
+                            <div class="flex-auto rounded-2xl border border-white/10 bg-bg-card p-6">
+                                <h3 class="text-lg font-bold text-white">Diplôme en Maintenance Informatique</h3>
+                                <p class="text-sm text-text-muted mb-2">CEDIC, Cameroun (2021)</p>
+                            </div>
+                        </div>
+                        <div class="fade-in-up relative flex gap-6">
+                            <div class="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-bg-card border border-white/20 text-text-muted">
+                                <span class="material-symbols-outlined text-sm">history_edu</span>
+                            </div>
+                            <div class="flex-auto rounded-2xl border border-white/10 bg-bg-card p-6">
+                                <h3 class="text-lg font-bold text-white">Baccalauréat des Sciences Appliquées</h3>
+                                <p class="text-text-muted mb-2">Lycée Bilingue De Gouache, Cameroun (2021)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="experience" class="py-20 px-4 border-t border-white/5">
+                <div class="mx-auto max-w-4xl">
+                    <h2 class="text-3xl font-bold tracking-tight text-white mb-12 text-center">Parcours Professionnel</h2>
+                    <div class="space-y-8">
+                        <div class="fade-in-up relative flex gap-6">
+                            <div class="absolute left-[19px] top-10 bottom-[-40px] w-0.5 bg-white/10"></div>
+                            <div class="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-bg-card border border-white/50 text-white">
+                                <span class="material-symbols-outlined text-sm">work</span>
+                            </div>
+                            <div class="flex-auto rounded-2xl border border-white/10 bg-bg-card p-6">
+                                <h3 class="text-lg font-bold text-white">Préposé à la plonge</h3>
+                                <p class="text-sm text-text-muted mb-2">ChartWell le Duplexis, Trois-Rivières | 2023 - 2024</p>
+                                <ul class="list-disc list-inside text-sm text-text-muted mt-2">
+                                    <li>Application stricte de procédures et de normes établies.</li>
+                                    <li>Travail d'équipe dans un environnement à rythme rapide.</li>
+                                    <li>Fiabilité et ponctualité.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5 bg-white/[0.02]">
+                <div class="mx-auto max-w-7xl">
+                    <h2 class="text-3xl font-bold tracking-tight text-white mb-12 text-center">Projets Réalisés</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        
+                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
+                                <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&w=800&q=80" alt="Code Web" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary">App Web Gestion Décodeur</h3>
+                                <p class="mt-2 text-sm text-text-muted">Gestion complète de décodeurs TV. Backend C#, API Node.js et Frontend React.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">C#</span>
+                                    <span class="rounded-full bg-green-500/10 px-2 py-1 text-xs text-green-400">Node.js</span>
+                                    <span class="rounded-full bg-cyan-500/10 px-2 py-1 text-xs text-cyan-400">React</span>
+                                </div>
+                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
+                            </div>
+                        </div>
+
+                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
+                                <img src="https://tse2.mm.bing.net/th/id/OIP.xQ-mFns3MDOoAbeaDy617wHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Sockets" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary">App Client/Serveur Socket</h3>
+                                <p class="mt-2 text-sm text-text-muted">Communication temps réel bi-directionnelle entre appareils via sockets TCP/IP en C#.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="rounded-full bg-indigo-500/10 px-2 py-1 text-xs text-indigo-400">C#</span>
+                                    <span class="rounded-full bg-indigo-500/10 px-2 py-1 text-xs text-indigo-400">Sockets</span>
+                                </div>
+                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
+                            </div>
+                        </div>
+
+                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
+                                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80" alt="Java RMI" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Connexion RMI Java & XML</h3>
+                                <p class="mt-2 text-sm text-text-muted">Architecture distribuée utilisant Remote Method Invocation (RMI) et interface XML.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="rounded-full bg-orange-500/10 px-2 py-1 text-xs text-orange-400">Java</span>
+                                    <span class="rounded-full bg-orange-500/10 px-2 py-1 text-xs text-orange-400">RMI</span>
+                                    <span class="rounded-full bg-orange-500/10 px-2 py-1 text-xs text-orange-400">XML</span>
+                                </div>
+                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
+                            </div>
+                        </div>
+
+                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
+                                <img src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=800&q=80" alt="Logique" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Validateur d'Automates</h3>
+                                <p class="mt-2 text-sm text-text-muted">Programme C# pour charger et valider des chaînes via des automates finis déterministes.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">C#</span>
+                                    <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">Algorithmes</span>
+                                </div>
+                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
+                            </div>
+                        </div>
+
+                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
+                                <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80" alt="Cyber" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Labo Hardening Linux</h3>
+                                <p class="mt-2 text-sm text-text-muted">Sécurisation d'une VM : SSH, Pare-feu, Gestion utilisateurs.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="rounded-full bg-red-500/10 px-2 py-1 text-xs text-red-400">Linux</span>
+                                    <span class="rounded-full bg-red-500/10 px-2 py-1 text-xs text-red-400">Security</span>
+                                </div>
+                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
+                            </div>
+                        </div>
+
+                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
+                                <img src="https://images.unsplash.com/photo-1551703599-6b3e8379aa8c?auto=format&fit=crop&w=800&q=80" alt="Wireshark" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Analyse Trafic Wireshark</h3>
+                                <p class="mt-2 text-sm text-text-muted">Capture de paquets et analyse forensique de trafic réseau suspect.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="rounded-full bg-purple-500/10 px-2 py-1 text-xs text-purple-400">Wireshark</span>
+                                </div>
+                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
+                            </div>
+                        </div>
+
+                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
+                                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" alt="Cloud" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Déploiement Cloud</h3>
+                                <p class="mt-2 text-sm text-text-muted">Déploiement sécurisé sur AWS/Azure avec Git.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="rounded-full bg-green-500/10 px-2 py-1 text-xs text-green-400">Cloud</span>
+                                    <span class="rounded-full bg-green-500/10 px-2 py-1 text-xs text-green-400">Git</span>
+                                </div>
+                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
+                            </div>
+                        </div>
+
+                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
+                                <img src="https://images.unsplash.com/photo-1605020420620-20c943cc4669?auto=format&fit=crop&w=800&q=80" alt="Jeu Cartes" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Jeu de Cartes C#</h3>
+                                <p class="mt-2 text-sm text-text-muted">Jeu complet WinForms avec gestion d'objets et animations.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">C#</span>
+                                </div>
+                                <a href="https://github.com/RoslinKenne/tp1groupe48-inf1035-masterfinal1.git" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
+                            </div>
+                        </div>
+
+                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
+                                <img src="https://images.unsplash.com/photo-1614332287897-cdc485fa562d?auto=format&fit=crop&w=800&q=80" alt="AI Life" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Game of Life (Python)</h3>
+                                <p class="mt-2 text-sm text-text-muted">Automate cellulaire optimisé avec Pygame.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="rounded-full bg-yellow-500/10 px-2 py-1 text-xs text-yellow-400">Python</span>
+                                </div>
+                                <a href="https://github.com/RoslinKenne/jeu-de-la-vie.git" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
+                            </div>
+                        </div>
+
+                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
+                                <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80" alt="Web PHP" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Site Web Loisirs</h3>
+                                <p class="mt-2 text-sm text-text-muted">Site dynamique pour événements universitaires (PHP/MySQL).</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="rounded-full bg-purple-500/10 px-2 py-1 text-xs text-purple-400">PHP</span>
+                                </div>
+                                <a href="https://github.com/zoyem-kenne/university-leisure-website" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
+                            </div>
+                        </div>
+
+                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
+                                <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80" alt="Bus" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Logiciel Location Bus</h3>
+                                <p class="mt-2 text-sm text-text-muted">Gestion de réservations en C# avec persistance JSON.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">C#</span>
+                                </div>
+                                <a href="https://github.com/RoslinKenne/tp1g13-master.git" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
+                            </div>
+                        </div>
+
+                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
+                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" alt="JSON Code" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Sérialiseur JSON</h3>
+                                <p class="mt-2 text-sm text-text-muted">Module Python pour la conversion d'objets complexes en JSON.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="rounded-full bg-yellow-500/10 px-2 py-1 text-xs text-yellow-400">C#</span>
+                                </div>
+                                <a href="https://github.com/RoslinKenne/tp2inf1035g48-master.git" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="relative py-24 px-4">
+                <div class="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-bg-card p-8 sm:p-12 shadow-2xl">
+                    <div class="text-center mb-10">
+                        <h2 class="text-3xl font-bold text-white">Contactez-moi</h2>
+                        <p class="mt-4 text-text-muted">Prêt à discuter de nouvelles opportunités.</p>
+                    </div>
+
+                    <form action="https://formspree.io/f/xpqzklyp" method="POST" class="space-y-6">
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                            <div>
+                                <label class="mb-2 block text-sm font-medium text-white">Nom</label>
+                                <input type="text" name="name" class="w-full rounded-lg border border-white/10 bg-bg-dark p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Votre nom" required>
+                            </div>
+                            <div>
+                                <label class="mb-2 block text-sm font-medium text-white">Email</label>
+                                <input type="email" name="email" class="w-full rounded-lg border border-white/10 bg-bg-dark p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="votre@email.com" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="mb-2 block text-sm font-medium text-white">Message</label>
+                            <textarea name="message" rows="4" class="w-full rounded-lg border border-white/10 bg-bg-dark p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Votre message..." required></textarea>
+                        </div>
+                        <button type="submit" class="w-full rounded-lg bg-primary py-3.5 text-center font-bold text-white hover:bg-blue-600 transition-colors">
+                            Envoyer le message
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="border-t border-white/10 bg-bg-dark py-12">
+            <div class="mx-auto max-w-7xl px-4 text-center">
+                <p class="text-sm text-text-muted">© 2025 Zoyem Roslin Kenne. Tous droits réservés.</p>
+            </div>
+        </footer>
+        
+        <button id="backToTop" onclick="scrollToTop()" class="fixed bottom-8 right-8 z-50 rounded-full bg-primary p-3 text-white shadow-lg transition-all duration-300 opacity-0 translate-y-10 hover:bg-blue-600">
+            <span class="material-symbols-outlined">Aller En Haut</span>
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Fade-in
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+            // 2. Machine à écrire
+            const textElement = document.getElementById('typewriter');
+            const phrases = ["Futur Expert Cyber", "Développeur C#", "Analyste Réseau", "Passionné du Cloud"];
+            let phraseIndex = 0; let charIndex = 0; let isDeleting = false; let typeSpeed = 100;
+
+            function type() {
+                const currentPhrase = phrases[phraseIndex];
+                if (isDeleting) {
+                    textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                    charIndex--;
+                    typeSpeed = 50; 
+                } else {
+                    textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                    charIndex++;
+                    typeSpeed = 100;
+                }
+                if (!isDeleting && charIndex === currentPhrase.length) {
+                    isDeleting = true; typeSpeed = 2000;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500;
+                }
+                setTimeout(type, typeSpeed);
+            }
+            if(textElement) type();
+
+            // 3. ScrollSpy & BackToTop
+            const sections = document.querySelectorAll("section");
+            const navLinks = document.querySelectorAll(".nav-link");
+            const backToTopBtn = document.getElementById("backToTop");
+
+            window.addEventListener("scroll", () => {
+                let current = "";
+                sections.forEach((section) => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollY >= sectionTop - 150) {
+                        current = section.getAttribute("id");
+                    }
+                });
+                navLinks.forEach((link) => {
+                    link.classList.remove("text-primary");
+                    if (link.getAttribute("href").includes(current)) {
+                        link.classList.add("text-primary");
+                    }
+                });
+                
+                if (window.scrollY > 500) {
+                    backToTopBtn.classList.remove("opacity-0", "translate-y-10");
+                } else {
+                    backToTopBtn.classList.add("opacity-0", "translate-y-10");
+                }
+            });
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
