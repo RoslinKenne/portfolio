@@ -1,0 +1,30 @@
+[
+  {
+    "id": "CVE-2024-0001",
+    "summary": "Injection SQL dans le module X due à un paramètre non filtré.",
+    "severity": "CRITICAL",
+    "published": "2024-06-12",
+    "link": "https://nvd.nist.gov/vuln/detail/CVE-2024-0001"
+  },
+  {
+    "id": "CVE-2024-0102",
+    "summary": "Dépassement de tampon dans la bibliothèque Y permettant exécution de code distant.",
+    "severity": "HIGH",
+    "published": "2024-08-03",
+    "link": "https://nvd.nist.gov/vuln/detail/CVE-2024-0102"
+  },
+  {
+    "id": "CVE-2025-0456",
+    "summary": "Fuite d'informations via l'en-tête Authorization dans Z.",
+    "severity": "MEDIUM",
+    "published": "2025-02-14",
+    "link": "https://nvd.nist.gov/vuln/detail/CVE-2025-0456"
+  },
+  {
+    "id": "CVE-2025-1000",
+    "summary": "Cross-Site Scripting réfléchi affectant le portail admin.",
+    "severity": "LOW",
+    "published": "2025-11-01",
+    "link": "https://nvd.nist.gov/vuln/detail/CVE-2025-1000"
+  }
+]

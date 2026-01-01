@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://generativelanguage.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://generativelanguage.googleapis.com https://formspree.io;">
+
     <meta property="og:title" content="Zoyem Roslin Kenne - Portfolio Cybersécurité & Dév">
-    <meta property="og:description" content="Étudiant à l'UQTR spécialisé en Cyber Sécurité, Cloud et Développement. Découvrez mes projets et mon parcours.">
+    <meta property="og:description" content="Étudiant à l'UQTR spécialisé en Cyber Sécurité, Cloud et Développement.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://roslinkenne.github.io/site-portefolio/">
     <meta property="og:image" content="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80">
@@ -16,6 +18,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js"></script>
     
     <script>
         tailwind.config = {
@@ -31,9 +34,7 @@
                         "text-main": "#F3F4F6",
                         "text-muted": "#9CA3AF"
                     },
-                    fontFamily: {
-                        "display": ["Inter", "sans-serif"]
-                    },
+                    fontFamily: { "display": ["Inter", "sans-serif"] },
                 },
             },
         }
@@ -42,44 +43,93 @@
     <style>
         html { scroll-behavior: smooth; }
         body { background-color: #0B0F19; color: #F3F4F6; }
-        
-        /* Texture de fond */
-        .bg-grid {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        }
-        
-        /* Effet de lueur */
-        .glow-effect {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
-        
-        /* Animations Fade-in */
+        .bg-grid { background-size: 40px 40px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px); }
         .fade-in-up { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .visible { opacity: 1; transform: translateY(0); }
         
         /* Curseur machine à écrire */
-        .cursor-blink { animation: blink 1s step-end infinite; }
+        #typewriter::after { content: '|'; animation: blink 1s step-end infinite; color: #3B82F6; }
         @keyframes blink { 50% { opacity: 0; } }
+        
+        .zoom-card { cursor: pointer; }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0B0F19; }
-        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3B82F6; }
+        /* Styles pour le Chatbot - Points de chargement */
+        .typing-dot { animation: typing 1.4s infinite ease-in-out both; }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+        /* Animation d'ondes (Pulse) pour le bouton IA */
+        .pulse-ring {
+            position: absolute;
+            left: 0; top: 0; right: 0; bottom: 0;
+            border-radius: 9999px;
+            border: 2px solid #3B82F6;
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            80%, 100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        /* Animation de la bulle de texte (Apparition) */
+        .bounce-in {
+            animation: bounce-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+        @keyframes bounce-in {
+            0% { transform: scale(0) translateX(-20px); opacity: 0; }
+            100% { transform: scale(1) translateX(0); opacity: 1; }
+        }
+
+        /* Scrollbar cachée pour le widget SOC */
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* CVE & SOC badges */
+        .badge-critical { background: linear-gradient(90deg,#dc2626,#f43f5e); color: white; padding: 0.15rem 0.5rem; border-radius: 999px; font-weight:700; font-size:0.75rem; }
+        .badge-high { background: linear-gradient(90deg,#f97316,#fb923c); color: white; padding: 0.15rem 0.5rem; border-radius: 999px; font-weight:700; font-size:0.75rem; }
+        .badge-medium { background: linear-gradient(90deg,#f59e0b,#fbbf24); color: black; padding: 0.15rem 0.5rem; border-radius: 999px; font-weight:700; font-size:0.75rem; }
+        .badge-low { background: linear-gradient(90deg,#10b981,#34d399); color: white; padding: 0.15rem 0.5rem; border-radius: 999px; font-weight:700; font-size:0.75rem; }
+
+        .soc-alert { padding: 0.5rem; border-left: 4px solid transparent; margin-bottom: 0.35rem; border-radius: 6px; }
+        .soc-alert.critical { border-left-color: #f43f5e; background: rgba(244,63,94,0.06); }
+        .soc-alert.high { border-left-color: #fb923c; background: rgba(251,146,60,0.04); }
+        .soc-alert.medium { border-left-color: #fbbf24; background: rgba(251,191,36,0.03); }
+        .soc-alert.low { border-left-color: #34d399; background: rgba(52,211,153,0.03); }
+
+        /* CTF styles */
+        .ctf-success { background: linear-gradient(90deg,#10b981,#34d399); color: white; padding: 0.5rem 1rem; border-radius: 8px; font-weight:700; }
+        .ctf-fail { background: linear-gradient(90deg,#ef4444,#f97316); color: white; padding: 0.5rem 1rem; border-radius: 8px; font-weight:700; }
+
+        /* Focus visible improvements for keyboard users */
+        :focus { outline: 3px solid rgba(59,130,246,0.6); outline-offset: 2px; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
     </style>
 </head>
 
 <body class="font-display overflow-x-hidden bg-grid">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 bg-primary text-white px-3 py-2 rounded z-50">Passer au contenu</a>
     
-    <div class="glow-effect"></div>
+    <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" class="fixed inset-0 z-[999] hidden flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 transition-opacity duration-300 opacity-0" onclick="closeModal()">
+        <div class="relative w-full max-w-5xl bg-bg-card border border-white/10 rounded-2xl shadow-2xl overflow-hidden transform transition-all scale-95 flex flex-col md:flex-row max-h-[90vh]" onclick="event.stopPropagation()"> <div class="w-full md:w-1/2 h-64 md:h-auto bg-black relative flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-white/10" onclick="closeModal()"> <img id="modal-img" src="" alt="Visuel du projet" class="h-full w-full object-cover opacity-90" loading="lazy">
+            </div>
+            <div class="w-full md:w-1/2 p-8 md:p-10 flex flex-col justify-center bg-bg-card overflow-y-auto" onclick="closeModal()"> <div onclick="event.stopPropagation()"> <span id="modal-category" class="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wider text-primary uppercase bg-primary/10 rounded-md w-fit border border-primary/20"></span>
+                    <h3 id="modal-title" class="text-3xl font-bold text-white mb-4"></h3>
+                    <p id="modal-desc" class="text-gray-300 leading-relaxed mb-8 text-base"></p>
+                    <div id="modal-tags" class="flex flex-wrap gap-2 mb-8"></div>
+                    
+                    <a id="modal-link" href="#" target="_blank" class="hidden w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-base font-bold text-white hover:bg-blue-600 transition-all shadow-lg shadow-primary/25 mb-6">
+                        Voir sur GitHub 
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                        </svg>
+                    </a>
+                    
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest cursor-pointer hover:text-white transition-colors text-center md:text-left mt-auto">CLIQUEZ N'IMPORTE OÙ POUR FERMER</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="relative z-10 flex h-auto min-h-screen w-full flex-col">
         
@@ -92,53 +142,38 @@
                         </div>
                         <span class="text-lg font-bold tracking-tight text-white">Zoyem R.K.</span>
                     </div>
-                    
                     <nav class="hidden md:flex items-center gap-8">
                         <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#hero">Accueil</a>
                         <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#about">À Propos</a>
                         <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#skills">Compétences</a>
                         <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#education">Formation</a>
+                        <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#certifications">Certifs</a>
                         <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#projects">Projets</a>
-                        <a href="#contact" class="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-primary/25 hover:bg-blue-600 transition-all hover:scale-105">
-                            Contact
-                        </a>
+                        <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#demos">Démos</a>
+                        <a href="#contact" class="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-primary/25 hover:bg-blue-600 transition-all hover:scale-105">Contact</a>
                     </nav>
-
-                    <button class="md:hidden text-white">
-                        <span class="material-symbols-outlined">menu</span>
-                    </button>
+                    <button class="md:hidden text-white"><span class="material-symbols-outlined">menu</span></button>
                 </div>
             </div>
         </header>
 
-        <main class="flex-grow">
-            
+        <main id="main" class="flex-grow">
             <section id="hero" class="relative py-24 sm:py-32 lg:py-40 px-4 text-center">
                 <div class="mx-auto max-w-5xl">
                     <div class="fade-in-up mx-auto mb-6 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur">
-                        <span class="relative flex h-2 w-2">
-                          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                          <span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
-                        </span>
+                        <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span></span>
                         <p class="text-xs font-medium text-white">Recherche stage Cyber/Cloud - Été 2026</p>
                     </div>
-                    
                     <h1 class="fade-in-up text-4xl font-black tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl mb-6 h-24 sm:h-auto">
-                        Zoyem Roslin Kenne <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary" id="typewriter"></span><span class="text-primary cursor-blink">|</span>
+                        <span class="cyber-text cursor-pointer hover:text-primary transition-colors">Zoyem Roslin Kenne</span> <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary" id="typewriter"></span>
                     </h1>
-                    
                     <p class="fade-in-up mx-auto max-w-3xl text-lg text-text-muted mb-8 leading-relaxed">
-                        Étudiant en informatique à l'UQTR. Je combine une expertise en programmation (C#, Python, Java) avec des compétences avancées en défense d'infrastructure et infonuagique.
+                        Étudiant en informatique à l'UQTR. Je combine une expertise en programmation (C#, Python, Java) avec des compétences avancées en défense d'infrastructure.
                     </p>
-                    
                     <div class="fade-in-up flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <a href="#projects" class="w-full sm:w-auto rounded-xl bg-primary px-8 py-4 text-base font-bold text-white shadow-lg shadow-primary/25 hover:bg-blue-600 transition-all hover:-translate-y-1">
-                            Voir mes projets
-                        </a>
-                       <a href="CV_stage_cyber_infonuagique_ATS.pdf" download="CV_Zoyem_Roslin_Kenne.pdf" class="w-full sm:w-auto rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-base font-bold text-white hover:bg-white/10 transition-all flex items-center justify-center gap-2">
-    <span class="material-symbols-outlined">download</span> Télécharger mon CV
-</a>
+                        <a href="#projects" class="w-full sm:w-auto rounded-xl bg-primary px-8 py-4 text-base font-bold text-white shadow-lg shadow-primary/25 hover:bg-blue-600 transition-all hover:-translate-y-1">Voir mes projets</a>
+                        <a href="CV_stage_cyber_infonuagique_ATS.pdf" download="CV_Zoyem_Roslin_Kenne.pdf" class="w-full sm:w-auto rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-base font-bold text-white hover:bg-white/10 transition-all flex items-center justify-center gap-2"><span class="material-symbols-outlined"></span> Télécharger mon CV</a>
                     </div>
                 </div>
             </section>
@@ -146,15 +181,11 @@
             <section id="about" class="py-20 border-y border-white/5 bg-white/[0.02]">
                 <div class="mx-auto max-w-4xl px-4">
                     <div class="mb-8 text-center">
-                        <h2 class="text-3xl font-bold tracking-tight text-white">À Propos de Moi</h2>
+                        <h2 class="text-3xl font-bold tracking-tight text-white cyber-text">À Propos de Moi</h2>
                     </div>
                     <div class="space-y-4 text-text-muted leading-relaxed text-center text-lg">
-                        <p>
-                            Je suis <strong>Zoyem Roslin Kenne</strong>, étudiant en informatique à l'Université du Québec à Trois-Rivières (UQTR).
-                        </p>
-                        <p>
-                            Mon expertise couvre plusieurs langages de programmation, dont <strong>Python, Java, C#, PHP, et JavaScript</strong>, ainsi que des frameworks comme React et Node.js. En cybersécurité, je me spécialise dans l'analyse des vulnérabilités, la protection des données et la sécurisation des infrastructures, avec une maîtrise d'outils comme <strong>Wireshark et Nmap</strong>.
-                        </p>
+                        <p>Je suis <strong>Zoyem Roslin Kenne</strong>, étudiant en informatique à l'Université du Québec à Trois-Rivières (UQTR).</p>
+                        <p>Mon expertise couvre plusieurs langages de programmation, dont <strong>Python, Java, C#, PHP</strong>. En cybersécurité, je me spécialise dans l'analyse des vulnérabilités, la protection des données et la sécurisation des infrastructures, avec une maîtrise d'outils comme <strong>Wireshark et Nmap</strong>.</p>
                     </div>
                 </div>
             </section>
@@ -162,41 +193,58 @@
             <section id="skills" class="py-20 border-b border-white/5">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="mb-16 text-center">
-                        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Arsenal Technique</h2>
-                        <p class="mt-4 text-text-muted">Compétences techniques clés et outils maîtrisés.</p>
+                        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl cyber-text">Arsenal Technique</h2>
+                        <p class="mt-4 text-text-muted">Cliquez sur une carte pour voir les détails.</p>
                     </div>
-
                     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                        <div class="fade-in-up group relative rounded-2xl border border-white/10 bg-bg-card p-6 hover:border-primary/50 transition-colors">
-                            <div class="mb-4 h-32 w-full overflow-hidden rounded-lg bg-blue-500/10">
-                                <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=400&q=80" alt="Code Développement" class="h-full w-full object-cover">
+                        
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group relative rounded-2xl border border-white/10 bg-bg-card p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="COMPÉTENCE" data-title="Développement Logiciel" data-desc="Maîtrise approfondie des langages C#, Python, Java et du développement Web (React, Node.js)."
+                             data-img="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=800&q=80">
+                            <div class="mb-4 h-32 overflow-hidden rounded-lg bg-blue-500/10"><img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=400&q=80" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"></div>
+                            <h3 class="text-lg font-bold text-white group-hover:text-primary transition-colors">Développement</h3>
+                            <div class="mt-4 flex flex-wrap gap-2 tags-source">
+                                <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">C#</span>
+                                <span class="rounded-full bg-yellow-500/10 px-2 py-1 text-xs text-yellow-400">Python</span>
+                                <span class="rounded-full bg-orange-500/10 px-2 py-1 text-xs text-orange-400">Java</span>
+                                <span class="rounded-full bg-white/10 px-2 py-1 text-xs text-gray-300">Git</span>
                             </div>
-                            <h3 class="text-lg font-bold text-white">Développement</h3>
-                            <p class="mt-2 text-sm text-text-muted">C#, Python, Java, React, Node.js, PHP, Git, VS Code, XML.</p>
                         </div>
 
-                        <div class="fade-in-up group relative rounded-2xl border border-white/10 bg-bg-card p-6 hover:border-primary/50 transition-colors">
-                            <div class="mb-4 h-32 w-full overflow-hidden rounded-lg bg-red-500/10">
-                                <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=400&q=80" alt="Cybersécurité Cadenas" class="h-full w-full object-cover">
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group relative rounded-2xl border border-white/10 bg-bg-card p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="COMPÉTENCE" data-title="Cyber Sécurité" data-desc="Protection des systèmes, Hardening Linux, IAM, logs et OWASP."
+                             data-img="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80">
+                            <div class="mb-4 h-32 overflow-hidden rounded-lg bg-red-500/10"><img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=400&q=80" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"></div>
+                            <h3 class="text-lg font-bold text-white group-hover:text-primary transition-colors">Cyber Sécurité</h3>
+                            <div class="mt-4 flex flex-wrap gap-2 tags-source">
+                                <span class="rounded-full bg-red-500/10 px-2 py-1 text-xs text-red-400">Hardening</span>
+                                <span class="rounded-full bg-white/10 px-2 py-1 text-xs text-gray-300">Linux</span>
+                                <span class="rounded-full bg-white/10 px-2 py-1 text-xs text-gray-300">OWASP</span>
                             </div>
-                            <h3 class="text-lg font-bold text-white">Cyber Sécurité</h3>
-                            <p class="mt-2 text-sm text-text-muted">Durcissement Linux, Contrôle d'accès (MFA), Logs, OWASP.</p>
                         </div>
 
-                        <div class="fade-in-up group relative rounded-2xl border border-white/10 bg-bg-card p-6 hover:border-primary/50 transition-colors">
-                            <div class="mb-4 h-32 w-full overflow-hidden rounded-lg bg-green-500/10">
-                                <img src="https://www.larochellegc.com/wp-content/uploads/2020/06/Infonuagique_ce_que_c_est.jpg" alt="Data Center Serveurs" class="h-full w-full object-cover">
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group relative rounded-2xl border border-white/10 bg-bg-card p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="COMPÉTENCE" data-title="Infonuagique" data-desc="Déploiement Cloud sur AWS/Azure, Docker et Virtualisation."
+                             data-img="https://www.larochellegc.com/wp-content/uploads/2020/06/Infonuagique_ce_que_c_est.jpg">
+                            <div class="mb-4 h-32 overflow-hidden rounded-lg bg-green-500/10"><img src="https://www.larochellegc.com/wp-content/uploads/2020/06/Infonuagique_ce_que_c_est.jpg" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"></div>
+                            <h3 class="text-lg font-bold text-white group-hover:text-primary transition-colors">Infonuagique</h3>
+                            <div class="mt-4 flex flex-wrap gap-2 tags-source">
+                                <span class="rounded-full bg-green-500/10 px-2 py-1 text-xs text-green-400">AWS/Azure</span>
+                                <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">Docker</span>
+                                <span class="rounded-full bg-white/10 px-2 py-1 text-xs text-gray-300">VM</span>
                             </div>
-                            <h3 class="text-lg font-bold text-white">Infonuagique</h3>
-                            <p class="mt-2 text-sm text-text-muted">AWS, Azure, GCP, Docker, Virtualisation (VM).</p>
                         </div>
 
-                        <div class="fade-in-up group relative rounded-2xl border border-white/10 bg-bg-card p-6 hover:border-primary/50 transition-colors">
-                            <div class="mb-4 h-32 w-full overflow-hidden rounded-lg bg-purple-500/10">
-                                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=400&q=80" alt="Câbles Réseau" class="h-full w-full object-cover">
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group relative rounded-2xl border border-white/10 bg-bg-card p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="COMPÉTENCE" data-title="Réseaux Informatiques" data-desc="Administration réseau, TCP/IP, Pare-feu et analyse Wireshark."
+                             data-img="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=80">
+                            <div class="mb-4 h-32 overflow-hidden rounded-lg bg-purple-500/10"><img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=400&q=80" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"></div>
+                            <h3 class="text-lg font-bold text-white group-hover:text-primary transition-colors">Réseaux</h3>
+                            <div class="mt-4 flex flex-wrap gap-2 tags-source">
+                                <span class="rounded-full bg-purple-500/10 px-2 py-1 text-xs text-purple-400">TCP/IP</span>
+                                <span class="rounded-full bg-white/10 px-2 py-1 text-xs text-gray-300">Wireshark</span>
+                                <span class="rounded-full bg-white/10 px-2 py-1 text-xs text-gray-300">VPN</span>
                             </div>
-                            <h3 class="text-lg font-bold text-white">Réseaux</h3>
-                            <p class="mt-2 text-sm text-text-muted">TCP/IP, DNS, VPN, Pare-feu, Analyse Wireshark.</p>
                         </div>
                     </div>
                 </div>
@@ -204,74 +252,80 @@
 
             <section id="education" class="py-20 px-4 bg-white/[0.02]">
                 <div class="mx-auto max-w-4xl">
-                    <h2 class="text-3xl font-bold tracking-tight text-white mb-12 text-center">Ma Formation</h2>
+                    <h2 class="text-3xl font-bold tracking-tight text-white mb-12 text-center cyber-text">Ma Formation Académique</h2>
                     <div class="space-y-8">
                         <div class="fade-in-up relative flex gap-6">
                             <div class="absolute left-[19px] top-10 bottom-[-40px] w-0.5 bg-white/10"></div>
-                            <div class="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-bg-card border border-primary text-primary">
-                                <span class="material-symbols-outlined text-sm">school</span>
-                            </div>
-                            <div class="flex-auto rounded-2xl border border-white/10 bg-bg-card p-6">
-                                <h3 class="text-lg font-bold text-white">Baccalauréat en Informatique</h3>
-                                <p class="text-sm text-primary mb-2">Université du Québec à Trois-Rivières (UQTR) | 2023 - En cours</p>
-                                <p class="text-sm text-text-muted">Cours pertinents : Réseaux informatiques, Systèmes d'exploitation, Sécurité informatique, Virtualisation / Cloud.</p>
-                            </div>
-                        </div>
-                        <div class="fade-in-up relative flex gap-6">
-                             <div class="absolute left-[19px] top-10 bottom-[-40px] w-0.5 bg-white/10"></div>
-                            <div class="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-bg-card border border-green-500 text-green-500">
-                                <span class="material-symbols-outlined text-sm">verified</span>
-                            </div>
-                            <div class="flex-auto rounded-2xl border border-white/10 bg-bg-card p-6">
-                                <h3 class="text-lg font-bold text-white">Certifications Professionnelles</h3>
-                                <ul class="list-disc list-inside text-sm text-text-muted mt-2">
-                                    <li>Google Cybersecurity Professional Certificate</li>
-                                    <li>Google IT Support Professional Certificate</li>
-                                    <li>CompTIA Security+ (En cours)</li>
-                                </ul>
+                            <div class="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-bg-card border border-primary text-primary"><span class="material-symbols-outlined text-sm">school</span></div>
+                            <div class="flex-auto rounded-2xl border border-white/10 bg-bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-lg">
+                                <div class="flex flex-wrap justify-between gap-2 mb-2"><h3 class="text-lg font-bold text-white">Baccalauréat en Informatique</h3><span class="text-sm font-medium text-primary bg-primary/10 px-2 py-0.5 rounded">2023 - En cours</span></div>
+                                <p class="text-text-muted mb-2">UQTR</p>
                             </div>
                         </div>
                         <div class="fade-in-up relative flex gap-6">
                             <div class="absolute left-[19px] top-10 bottom-[-40px] w-0.5 bg-white/10"></div>
-                            <div class="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-bg-card border border-secondary text-secondary">
-                                <span class="material-symbols-outlined text-sm">build</span>
-                            </div>
-                            <div class="flex-auto rounded-2xl border border-white/10 bg-bg-card p-6">
-                                <h3 class="text-lg font-bold text-white">Diplôme en Maintenance Informatique</h3>
-                                <p class="text-sm text-text-muted mb-2">CEDIC, Cameroun (2021)</p>
+                            <div class="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-bg-card border border-secondary text-secondary"><span class="material-symbols-outlined text-sm">build</span></div>
+                            <div class="flex-auto rounded-2xl border border-white/10 bg-bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-lg">
+                                <div class="flex flex-wrap justify-between gap-2 mb-2"><h3 class="text-lg font-bold text-white">Diplôme en Maintenance Informatique</h3><span class="text-sm font-medium text-secondary bg-secondary/10 px-2 py-0.5 rounded">2021</span></div>
+                                <p class="text-text-muted mb-2">CEDIC, Cameroun</p>
                             </div>
                         </div>
                         <div class="fade-in-up relative flex gap-6">
-                            <div class="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-bg-card border border-white/20 text-text-muted">
-                                <span class="material-symbols-outlined text-sm">history_edu</span>
-                            </div>
-                            <div class="flex-auto rounded-2xl border border-white/10 bg-bg-card p-6">
+                            <div class="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-bg-card border border-white/20 text-text-muted"><span class="material-symbols-outlined text-sm">history_edu</span></div>
+                            <div class="flex-auto rounded-2xl border border-white/10 bg-bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-lg">
                                 <h3 class="text-lg font-bold text-white">Baccalauréat des Sciences Appliquées</h3>
-                                <p class="text-text-muted mb-2">Lycée Bilingue De Gouache, Cameroun (2021)</p>
+                                <p class="text-text-muted mb-2">2021 | Lycée Bilingue De Gouache</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section id="experience" class="py-20 px-4 border-t border-white/5">
-                <div class="mx-auto max-w-4xl">
-                    <h2 class="text-3xl font-bold tracking-tight text-white mb-12 text-center">Parcours Professionnel</h2>
-                    <div class="space-y-8">
-                        <div class="fade-in-up relative flex gap-6">
-                            <div class="absolute left-[19px] top-10 bottom-[-40px] w-0.5 bg-white/10"></div>
-                            <div class="relative z-10 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-bg-card border border-white/50 text-white">
-                                <span class="material-symbols-outlined text-sm">work</span>
+            <section id="certifications" class="py-20 px-4 border-t border-white/5 bg-white/[0.02]">
+                <div class="mx-auto max-w-7xl">
+                    <h2 class="text-3xl font-bold tracking-tight text-white mb-12 text-center cyber-text">Certifications & Veille</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group relative rounded-2xl border border-green-500/30 bg-bg-card p-6 transition-all duration-300 hover:-translate-y-2 hover:border-green-500 hover:shadow-2xl hover:shadow-[0_0_20px_rgba(34,197,94,0.1)]"
+                             data-category="CERTIFICATION" data-title="Google Cybersecurity Professional" data-desc="Formation intensive Google sur la sécurité. Linux, SQL, Python, IDS/IPS, incidents."
+                             data-img="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80">
+                            <div class="absolute top-6 right-6 z-10"><span class="inline-flex items-center rounded-full bg-green-500/90 px-2 py-1 text-xs font-bold text-white">COMPLÉTÉ</span></div>
+                            <div class="mb-4 h-32 overflow-hidden rounded-lg bg-green-500/10"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=400&q=80" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"></div>
+                            <h3 class="text-xl font-bold text-white">Google Cybersecurity Pro</h3>
+                            <div class="mt-4 flex flex-wrap gap-2 tags-source">
+                                <span class="rounded-full bg-green-500/10 px-2 py-1 text-xs text-green-400">Google</span>
+                                <span class="rounded-full bg-white/10 px-2 py-1 text-xs text-gray-300">Cyber</span>
                             </div>
-                            <div class="flex-auto rounded-2xl border border-white/10 bg-bg-card p-6">
-                                <h3 class="text-lg font-bold text-white">Préposé à la plonge</h3>
-                                <p class="text-sm text-text-muted mb-2">ChartWell le Duplexis, Trois-Rivières | 2023 - 2024</p>
-                                <ul class="list-disc list-inside text-sm text-text-muted mt-2">
-                                    <li>Application stricte de procédures et de normes établies.</li>
-                                    <li>Travail d'équipe dans un environnement à rythme rapide.</li>
-                                    <li>Fiabilité et ponctualité.</li>
-                                </ul>
+                        </div>
+
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group relative rounded-2xl border border-blue-500/30 bg-bg-card p-6 transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 hover:shadow-2xl hover:shadow-[0_0_20px_rgba(59,130,246,0.1)]"
+                             data-category="CERTIFICATION" data-title="Google IT Support Professional" data-desc="Fondamentaux du support technique et réseaux."
+                             data-img="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=800&q=80">
+                            <div class="absolute top-6 right-6 z-10"><span class="inline-flex items-center rounded-full bg-blue-500/90 px-2 py-1 text-xs font-bold text-white">COMPLÉTÉ</span></div>
+                            <div class="mb-4 h-32 overflow-hidden rounded-lg bg-blue-500/10"><img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=400&q=80" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"></div>
+                            <h3 class="text-xl font-bold text-white">Google IT Support Pro</h3>
+                            <div class="mt-4 flex flex-wrap gap-2 tags-source">
+                                <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">IT Support</span>
                             </div>
+                        </div>
+
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group relative rounded-2xl border border-yellow-500/30 bg-bg-card p-6 transition-all duration-300 hover:-translate-y-2 hover:border-yellow-500 hover:shadow-2xl hover:shadow-[0_0_20px_rgba(234,179,8,0.1)]"
+                             data-category="CERTIFICATION" data-title="CompTIA Security+" data-desc="Validation compétences cybersécurité, risques, crypto."
+                             data-img="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80">
+                            <div class="absolute top-6 right-6 z-10"><span class="inline-flex items-center rounded-full bg-yellow-500/90 px-2 py-1 text-xs font-bold text-white animate-pulse">EN COURS</span></div>
+                            <div class="mb-4 h-32 overflow-hidden rounded-lg bg-yellow-500/10"><img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=400&q=80" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"></div>
+                            <h3 class="text-xl font-bold text-white">CompTIA Security+</h3>
+                            <div class="mt-4 flex flex-wrap gap-2 tags-source">
+                                <span class="rounded-full bg-yellow-500/10 px-2 py-1 text-xs text-yellow-400">CompTIA</span>
+                            </div>
+                        </div>
+
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group relative rounded-2xl border border-purple-500/30 bg-bg-card p-6 transition-all duration-300 hover:-translate-y-2 hover:border-purple-500 hover:shadow-2xl hover:shadow-[0_0_20px_rgba(168,85,247,0.1)]"
+                             data-category="VEILLE" data-title="Veille Technologique Active" data-desc="Suivi CVE, EDR/XDR, Labos."
+                             data-img="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=800&q=80">
+                            <div class="absolute top-6 right-6 z-10"><span class="inline-flex items-center rounded-full bg-purple-500/90 px-2 py-1 text-xs font-bold text-white">CONTINU</span></div>
+                            <div class="mb-4 h-32 overflow-hidden rounded-lg bg-purple-500/10"><img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=400&q=80" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"></div>
+                            <h3 class="text-xl font-bold text-white">Veille Technologique</h3>
                         </div>
                     </div>
                 </div>
@@ -279,183 +333,161 @@
 
             <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5 bg-white/[0.02]">
                 <div class="mx-auto max-w-7xl">
-                    <h2 class="text-3xl font-bold tracking-tight text-white mb-12 text-center">Projets Réalisés</h2>
-                    
+                    <h2 class="text-3xl font-bold tracking-tight text-white mb-12 text-center cyber-text">Projets Réalisés</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         
-                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
-                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
-                                <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&w=800&q=80" alt="Code Web" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                            </div>
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="PROJET" data-title="App Web Gestion Décodeur" data-desc="Gestion complète de décodeurs TV. Backend C#, API Node.js et Frontend React." data-link="https://github.com/RoslinKenne"
+                             data-img="https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&w=600&q=80">
+                            <div class="h-48 overflow-hidden bg-bg-dark border-b border-white/5"><img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&w=600&q=80" class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"></div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white group-hover:text-primary">App Web Gestion Décodeur</h3>
-                                <p class="mt-2 text-sm text-text-muted">Gestion complète de décodeurs TV. Backend C#, API Node.js et Frontend React.</p>
-                                <div class="mt-4 flex flex-wrap gap-2">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">App Web Gestion Décodeur</h3>
+                                <div class="mt-4 flex flex-wrap gap-2 tags-source">
                                     <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">C#</span>
                                     <span class="rounded-full bg-green-500/10 px-2 py-1 text-xs text-green-400">Node.js</span>
                                     <span class="rounded-full bg-cyan-500/10 px-2 py-1 text-xs text-cyan-400">React</span>
                                 </div>
-                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
                             </div>
                         </div>
 
-                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
-                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
-                                <img src="https://tse2.mm.bing.net/th/id/OIP.xQ-mFns3MDOoAbeaDy617wHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Sockets" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                            </div>
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="PROJET" data-title="Client/Serveur Socket C#" data-desc="Communication temps réel bi-directionnelle via sockets TCP/IP en C#. Gestion des threads." data-link="https://github.com/RoslinKenne"
+                             data-img="https://tse2.mm.bing.net/th/id/OIP.xQ-mFns3MDOoAbeaDy617wHaHa?rs=1&pid=ImgDetMain&o=7&rm=3">
+                            <div class="h-48 overflow-hidden bg-bg-dark border-b border-white/5"><img src="https://tse2.mm.bing.net/th/id/OIP.xQ-mFns3MDOoAbeaDy617wHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"></div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white group-hover:text-primary">App Client/Serveur Socket</h3>
-                                <p class="mt-2 text-sm text-text-muted">Communication temps réel bi-directionnelle entre appareils via sockets TCP/IP en C#.</p>
-                                <div class="mt-4 flex flex-wrap gap-2">
-                                    <span class="rounded-full bg-indigo-500/10 px-2 py-1 text-xs text-indigo-400">C#</span>
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Socket C#</h3>
+                                <div class="mt-4 flex flex-wrap gap-2 tags-source">
+                                    <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">C#</span>
                                     <span class="rounded-full bg-indigo-500/10 px-2 py-1 text-xs text-indigo-400">Sockets</span>
                                 </div>
-                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
                             </div>
                         </div>
 
-                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
-                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
-                                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80" alt="Java RMI" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                            </div>
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="PROJET" data-title="Système RMI Java" data-desc="Architecture distribuée avec Remote Method Invocation et XML." data-link="https://github.com/RoslinKenne"
+                             data-img="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80">
+                            <div class="h-48 overflow-hidden bg-bg-dark border-b border-white/5"><img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80" class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"></div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Connexion RMI Java & XML</h3>
-                                <p class="mt-2 text-sm text-text-muted">Architecture distribuée utilisant Remote Method Invocation (RMI) et interface XML.</p>
-                                <div class="mt-4 flex flex-wrap gap-2">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Java RMI</h3>
+                                <div class="mt-4 flex flex-wrap gap-2 tags-source">
                                     <span class="rounded-full bg-orange-500/10 px-2 py-1 text-xs text-orange-400">Java</span>
                                     <span class="rounded-full bg-orange-500/10 px-2 py-1 text-xs text-orange-400">RMI</span>
                                     <span class="rounded-full bg-orange-500/10 px-2 py-1 text-xs text-orange-400">XML</span>
                                 </div>
-                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
                             </div>
                         </div>
 
-                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
-                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
-                                <img src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=800&q=80" alt="Logique" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                            </div>
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="PROJET" data-title="Validateur d'Automates" data-desc="Validation de chaînes via automates finis en C#." data-link="https://github.com/RoslinKenne"
+                             data-img="https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=600&q=80">
+                            <div class="h-48 overflow-hidden bg-bg-dark border-b border-white/5"><img src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=600&q=80" class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"></div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Validateur d'Automates</h3>
-                                <p class="mt-2 text-sm text-text-muted">Programme C# pour charger et valider des chaînes via des automates finis déterministes.</p>
-                                <div class="mt-4 flex flex-wrap gap-2">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Validateur d'Automates</h3>
+                                <div class="mt-4 flex flex-wrap gap-2 tags-source">
                                     <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">C#</span>
-                                    <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">Algorithmes</span>
+                                    <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">Algo</span>
                                 </div>
-                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
                             </div>
                         </div>
 
-                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
-                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
-                                <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80" alt="Cyber" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                            </div>
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="PROJET" data-title="Labo Hardening Linux" data-desc="Sécurisation VM : SSH, UFW, Utilisateurs." data-link="https://github.com/RoslinKenne"
+                             data-img="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80">
+                            <div class="h-48 overflow-hidden bg-bg-dark border-b border-white/5"><img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80" class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"></div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Labo Hardening Linux</h3>
-                                <p class="mt-2 text-sm text-text-muted">Sécurisation d'une VM : SSH, Pare-feu, Gestion utilisateurs.</p>
-                                <div class="mt-4 flex flex-wrap gap-2">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Labo Hardening Linux</h3>
+                                <div class="mt-4 flex flex-wrap gap-2 tags-source">
                                     <span class="rounded-full bg-red-500/10 px-2 py-1 text-xs text-red-400">Linux</span>
                                     <span class="rounded-full bg-red-500/10 px-2 py-1 text-xs text-red-400">Security</span>
                                 </div>
-                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
                             </div>
                         </div>
 
-                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
-                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
-                                <img src="https://images.unsplash.com/photo-1551703599-6b3e8379aa8c?auto=format&fit=crop&w=800&q=80" alt="Wireshark" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                            </div>
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="PROJET" data-title="Analyse Wireshark" data-desc="Capture et analyse de paquets suspects." data-link="https://github.com/RoslinKenne"
+                             data-img="https://images.unsplash.com/photo-1551703599-6b3e8379aa8c?auto=format&fit=crop&w=600&q=80">
+                            <div class="h-48 overflow-hidden bg-bg-dark border-b border-white/5"><img src="https://images.unsplash.com/photo-1551703599-6b3e8379aa8c?auto=format&fit=crop&w=600&q=80" class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"></div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Analyse Trafic Wireshark</h3>
-                                <p class="mt-2 text-sm text-text-muted">Capture de paquets et analyse forensique de trafic réseau suspect.</p>
-                                <div class="mt-4 flex flex-wrap gap-2">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Analyse Wireshark</h3>
+                                <div class="mt-4 flex flex-wrap gap-2 tags-source">
                                     <span class="rounded-full bg-purple-500/10 px-2 py-1 text-xs text-purple-400">Wireshark</span>
                                 </div>
-                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
                             </div>
                         </div>
 
-                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
-                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
-                                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" alt="Cloud" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                            </div>
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="PROJET" data-title="Déploiement Cloud" data-desc="AWS/Azure avec Git et Sécurité." data-link="https://github.com/RoslinKenne"
+                             data-img="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80">
+                            <div class="h-48 overflow-hidden bg-bg-dark border-b border-white/5"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"></div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Déploiement Cloud</h3>
-                                <p class="mt-2 text-sm text-text-muted">Déploiement sécurisé sur AWS/Azure avec Git.</p>
-                                <div class="mt-4 flex flex-wrap gap-2">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Déploiement Cloud</h3>
+                                <div class="mt-4 flex flex-wrap gap-2 tags-source">
                                     <span class="rounded-full bg-green-500/10 px-2 py-1 text-xs text-green-400">Cloud</span>
                                     <span class="rounded-full bg-green-500/10 px-2 py-1 text-xs text-green-400">Git</span>
                                 </div>
-                                <a href="https://github.com/RoslinKenne" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
                             </div>
                         </div>
 
-                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
-                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
-                                <img src="https://images.unsplash.com/photo-1605020420620-20c943cc4669?auto=format&fit=crop&w=800&q=80" alt="Jeu Cartes" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                            </div>
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="PROJET" data-title="Jeu de Cartes WinForms" data-desc="Jeu C# complet avec gestion d'objets." data-link="https://github.com/RoslinKenne/tp1groupe48-inf1035-masterfinal1.git"
+                             data-img="https://images.unsplash.com/photo-1605020420620-20c943cc4669?auto=format&fit=crop&w=600&q=80">
+                            <div class="h-48 overflow-hidden bg-bg-dark border-b border-white/5"><img src="https://images.unsplash.com/photo-1605020420620-20c943cc4669?auto=format&fit=crop&w=600&q=80" class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"></div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Jeu de Cartes C#</h3>
-                                <p class="mt-2 text-sm text-text-muted">Jeu complet WinForms avec gestion d'objets et animations.</p>
-                                <div class="mt-4 flex flex-wrap gap-2">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Jeu de Cartes C#</h3>
+                                <div class="mt-4 flex flex-wrap gap-2 tags-source">
                                     <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">C#</span>
+                                    <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">WinForms</span>
                                 </div>
-                                <a href="https://github.com/RoslinKenne/tp1groupe48-inf1035-masterfinal1.git" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
                             </div>
                         </div>
 
-                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
-                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
-                                <img src="https://images.unsplash.com/photo-1614332287897-cdc485fa562d?auto=format&fit=crop&w=800&q=80" alt="AI Life" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                            </div>
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="PROJET" data-title="Game of Life (Neural)" data-desc="Automate cellulaire Python/Pygame." data-link="https://github.com/RoslinKenne/jeu-de-la-vie.git"
+                             data-img="https://images.unsplash.com/photo-1614332287897-cdc485fa562d?auto=format&fit=crop&w=600&q=80">
+                            <div class="h-48 overflow-hidden bg-bg-dark border-b border-white/5"><img src="https://images.unsplash.com/photo-1614332287897-cdc485fa562d?auto=format&fit=crop&w=600&q=80" class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"></div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Game of Life (Python)</h3>
-                                <p class="mt-2 text-sm text-text-muted">Automate cellulaire optimisé avec Pygame.</p>
-                                <div class="mt-4 flex flex-wrap gap-2">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Game of Life</h3>
+                                <div class="mt-4 flex flex-wrap gap-2 tags-source">
                                     <span class="rounded-full bg-yellow-500/10 px-2 py-1 text-xs text-yellow-400">Python</span>
                                 </div>
-                                <a href="https://github.com/RoslinKenne/jeu-de-la-vie.git" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
                             </div>
                         </div>
 
-                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
-                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
-                                <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80" alt="Web PHP" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                            </div>
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="PROJET" data-title="Site Web Événementiel" data-desc="Site dynamique PHP/MySQL." data-link="https://github.com/zoyem-kenne/university-leisure-website"
+                             data-img="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=600&q=80">
+                            <div class="h-48 overflow-hidden bg-bg-dark border-b border-white/5"><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=600&q=80" class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"></div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Site Web Loisirs</h3>
-                                <p class="mt-2 text-sm text-text-muted">Site dynamique pour événements universitaires (PHP/MySQL).</p>
-                                <div class="mt-4 flex flex-wrap gap-2">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Site Web Loisirs</h3>
+                                <div class="mt-4 flex flex-wrap gap-2 tags-source">
                                     <span class="rounded-full bg-purple-500/10 px-2 py-1 text-xs text-purple-400">PHP</span>
+                                    <span class="rounded-full bg-purple-500/10 px-2 py-1 text-xs text-purple-400">MySQL</span>
                                 </div>
-                                <a href="https://github.com/zoyem-kenne/university-leisure-website" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
                             </div>
                         </div>
 
-                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
-                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
-                                <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80" alt="Bus" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                            </div>
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="PROJET" data-title="Logiciel Location Bus" data-desc="Gestion flotte C# avec JSON." data-link="https://github.com/RoslinKenne/tp1g13-master.git"
+                             data-img="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80">
+                            <div class="h-48 overflow-hidden bg-bg-dark border-b border-white/5"><img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80" class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"></div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Logiciel Location Bus</h3>
-                                <p class="mt-2 text-sm text-text-muted">Gestion de réservations en C# avec persistance JSON.</p>
-                                <div class="mt-4 flex flex-wrap gap-2">
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Location Bus</h3>
+                                <div class="mt-4 flex flex-wrap gap-2 tags-source">
                                     <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">C#</span>
                                 </div>
-                                <a href="https://github.com/RoslinKenne/tp1g13-master.git" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
                             </div>
                         </div>
 
-                        <div class="fade-in-up group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
-                            <div class="relative h-48 w-full overflow-hidden bg-bg-dark border-b border-white/5">
-                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" alt="JSON Code" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500">
-                            </div>
+                        <div onclick="openModal(this)" class="zoom-card fade-in-up group overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+                             data-category="PROJET" data-title="Sérialiseur JSON" data-desc="Module C# personnalisé pour conversion JSON." data-link="https://github.com/RoslinKenne/tp2inf1035g48-master.git"
+                             data-img="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80">
+                            <div class="h-48 overflow-hidden bg-bg-dark border-b border-white/5"><img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80" class="h-full w-full object-cover opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"></div>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white group-hover:text-primary">Sérialiseur JSON</h3>
-                                <p class="mt-2 text-sm text-text-muted">Module Python pour la conversion d'objets complexes en JSON.</p>
-                                <div class="mt-4 flex flex-wrap gap-2">
-                                    <span class="rounded-full bg-yellow-500/10 px-2 py-1 text-xs text-yellow-400">C#</span>
+                                <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Sérialiseur JSON</h3>
+                                <div class="mt-4 flex flex-wrap gap-2 tags-source">
+                                    <span class="rounded-full bg-blue-500/10 px-2 py-1 text-xs text-blue-400">C#</span>
+                                    <span class="rounded-full bg-white/10 px-2 py-1 text-xs text-gray-300">JSON</span>
                                 </div>
-                                <a href="https://github.com/RoslinKenne/tp2inf1035g48-master.git" target="_blank" class="block mt-4 text-sm font-bold text-primary hover:underline">Voir GitHub</a>
                             </div>
                         </div>
 
@@ -463,31 +495,69 @@
                 </div>
             </section>
 
-            <section id="contact" class="relative py-24 px-4">
-                <div class="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-bg-card p-8 sm:p-12 shadow-2xl">
-                    <div class="text-center mb-10">
-                        <h2 class="text-3xl font-bold text-white">Contactez-moi</h2>
-                        <p class="mt-4 text-text-muted">Prêt à discuter de nouvelles opportunités.</p>
-                    </div>
+            <section id="demos" class="py-20 px-4 bg-white/[0.01] border-t border-white/5">
+                <div class="mx-auto max-w-7xl">
+                    <h2 class="text-3xl font-bold tracking-tight text-white mb-8 text-center cyber-text">Démos & Outils</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="rounded-2xl border border-white/10 bg-bg-card p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-bold text-white">SOC Simulé</h3>
+                                <div class="flex items-center gap-2">
+                                    <button id="soc-pause" class="text-sm px-3 py-1 rounded bg-white/5 hover:bg-white/10">Pause</button>
+                                    <select id="soc-severity-filter" class="bg-bg-dark border border-white/10 text-sm rounded px-2 py-1">
+                                        <option value="ALL">Tout</option>
+                                        <option value="CRITICAL">Critical</option>
+                                        <option value="HIGH">High</option>
+                                        <option value="MEDIUM">Medium</option>
+                                        <option value="LOW">Low</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="soc-alerts" class="h-48 overflow-auto bg-black/60 text-green-400 p-3 rounded scrollbar-hide"></div>
+                            <p class="text-text-muted text-sm mt-3">Le SOC simule des alertes liées aux logs et les classe par sévérité. Cliquer une alerte pour la marquer comme investiguée.</p>
+                        </div>
 
-                    <form action="https://formspree.io/f/xpqzklyp" method="POST" class="space-y-6">
-                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                            <div>
-                                <label class="mb-2 block text-sm font-medium text-white">Nom</label>
-                                <input type="text" name="name" class="w-full rounded-lg border border-white/10 bg-bg-dark p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Votre nom" required>
+                        <div class="rounded-2xl border border-white/10 bg-bg-card p-6">
+                            <h3 class="text-xl font-bold text-white mb-4">Recherche CVE (mock)</h3>
+                            <div class="flex gap-2 mb-4">
+                                <input id="cve-input" aria-label="Recherche CVE" type="text" placeholder="Rechercher (ex: SQL, CVE-2024)" class="flex-1 rounded-lg bg-bg-dark border border-white/10 p-3 text-white">
+                                <button id="cve-search-btn" aria-label="Lancer la recherche CVE" class="rounded-lg bg-primary px-4 py-2 text-white">Rechercher</button>
                             </div>
-                            <div>
-                                <label class="mb-2 block text-sm font-medium text-white">Email</label>
-                                <input type="email" name="email" class="w-full rounded-lg border border-white/10 bg-bg-dark p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="votre@email.com" required>
+                            <div id="cve-results" class="h-48 overflow-auto bg-black/60 p-3 rounded scrollbar-hide text-sm"></div>
+                            <p class="text-text-muted text-sm mt-3">Base de données CVE simulée. Liens redirigent vers NVD pour démonstration.</p>
+                        </div>
+
+                        <div class="rounded-2xl border border-white/10 bg-bg-card p-6">
+                            <h3 class="text-xl font-bold text-white mb-4">Mini CTF : Trouve le flag</h3>
+                            <p class="text-text-muted text-sm mb-3">Indice : la réponse est encodée. Décoder pour obtenir le flag.</p>
+                            <div class="mb-3 p-3 rounded bg-white/3">
+                                <div id="ctf-encoded" data-encoded="Q1RGe2tlZXBzX2l0X3NpbXBsZV8yMDI2fQ==" class="font-mono text-sm text-white">Q1RGe2tlZXBzX2l0X3NpbXBsZV8yMDI2fQ==</div>
+                                <div class="mt-2 flex items-center gap-2">
+                                    <button id="ctf-decode-btn" aria-label="Décoder l'indice" class="rounded-lg bg-white/5 px-3 py-1 text-sm">Décoder</button>
+                                    <button id="ctf-copy-encoded" aria-label="Copier l'indice" class="rounded-lg bg-white/5 px-3 py-1 text-sm">Copier</button>
+                                </div>
                             </div>
+
+                            <div class="flex gap-2 mb-3">
+                                <input id="ctf-input" aria-label="Saisir le flag" type="text" placeholder="Entrez le flag ici" class="flex-1 rounded-lg bg-bg-dark border border-white/10 p-3 text-white">
+                                <button id="ctf-submit-btn" aria-label="Soumettre le flag" class="rounded-lg bg-primary px-4 py-2 text-white">Soumettre</button>
+                            </div>
+
+                            <div id="ctf-feedback" role="status" aria-live="polite" class="text-sm text-text-muted">Soumettez le flag correct pour gagner un badge.</div>
+                            <p class="text-text-muted text-xs mt-3">Cette démo est statique et sert à illustrer la pratique d'analyse. Aucun risque réel de production.</p>
                         </div>
-                        <div>
-                            <label class="mb-2 block text-sm font-medium text-white">Message</label>
-                            <textarea name="message" rows="4" class="w-full rounded-lg border border-white/10 bg-bg-dark p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Votre message..." required></textarea>
-                        </div>
-                        <button type="submit" class="w-full rounded-lg bg-primary py-3.5 text-center font-bold text-white hover:bg-blue-600 transition-colors">
-                            Envoyer le message
-                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="py-24 px-4">
+                <div class="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-bg-card p-8 text-center">
+                    <h2 class="text-3xl font-bold text-white mb-8 cyber-text">Contactez-moi</h2>
+                    <form action="https://formspree.io/f/xpqzklyp" method="POST" class="space-y-4">
+                        <input type="text" name="name" class="w-full rounded-lg bg-bg-dark border border-white/10 p-3 text-white" placeholder="Nom" required>
+                        <input type="email" name="email" class="w-full rounded-lg bg-bg-dark border border-white/10 p-3 text-white" placeholder="Email" required>
+                        <textarea name="message" rows="4" class="w-full rounded-lg bg-bg-dark border border-white/10 p-3 text-white" placeholder="Message" required></textarea>
+                        <button class="w-full rounded-lg bg-primary py-3 font-bold text-white hover:bg-blue-600">Envoyer</button>
                     </form>
                 </div>
             </section>
@@ -500,80 +570,616 @@
             </div>
         </footer>
         
-        <button id="backToTop" onclick="scrollToTop()" class="fixed bottom-8 right-8 z-50 rounded-full bg-primary p-3 text-white shadow-lg transition-all duration-300 opacity-0 translate-y-10 hover:bg-blue-600">
-            <span class="material-symbols-outlined">Aller En Haut</span>
+        <button id="backToTop" onclick="scrollToTop()" class="fixed bottom-8 right-8 z-50 rounded-xl bg-primary px-4 py-3 text-white shadow-lg opacity-0 transition-all hover:bg-blue-600 font-bold text-sm uppercase tracking-wider flex items-center gap-2">
+            Aller En Haut
         </button>
+
+        <div id="soc-widget" class="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-[900] hidden md:flex flex-col w-[600px] bg-bg-card border border-primary/30 rounded-t-xl shadow-2xl backdrop-blur-md overflow-hidden font-mono text-xs transition-all duration-300">
+            
+            <div class="bg-bg-dark/90 p-2 border-b border-primary/20 flex justify-between items-center cursor-pointer" onclick="toggleSoc()">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                    <span class="text-primary font-bold tracking-wider">LIVE TRAFFIC MONITOR</span>
+                </div>
+                <div class="flex items-center gap-4 text-gray-400">
+                    <span>IP: 192.168.1.X</span>
+                    <span class="material-symbols-outlined text-sm hover:text-white" id="soc-icon">AGRANDIR</span>
+                </div>
+            </div>
+
+            <div id="soc-content" class="p-3 h-32 overflow-y-auto space-y-1 bg-black/50 text-green-400/90 scrollbar-hide">
+                <div class="border-b border-white/10 pb-2 mb-2 flex justify-between">
+                    <div>
+                        <span class="text-blue-400">SYSTEM:</span> <span class="text-white">PORTFOLIO_CORE_V2</span>
+                        <span class="text-blue-400 ml-4">STATUS:</span> <span class="text-green-500">PROTECTED</span>
+                    </div>
+                    <div>
+                        <span class="text-blue-400">ENCRYPTION:</span> TLS 1.3 (AES-256)
+                    </div>
+                </div>
+                <div id="log-container"></div>
+            </div>
+        </div>
+
+        <div id="chat-widget-container" class="fixed bottom-8 left-8 z-[1000] flex flex-col items-start gap-4">
+            
+            <div id="chat-window" class="hidden w-[350px] h-[500px] flex-col rounded-2xl border border-white/10 bg-bg-card shadow-2xl overflow-hidden transition-all origin-bottom-left">
+                <div class="bg-primary/10 p-4 border-b border-white/10 flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        <div class="px-3 py-1.5 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-xs">
+                            CHARLIE
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white">Assistant IA</h4>
+                            <p class="text-[10px] text-green-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> En ligne</p>
+                        </div>
+                    </div>
+                    <button onclick="toggleChat()" class="text-gray-400 hover:text-white"><span class="material-symbols-outlined">close</span></button>
+                </div>
+                
+                <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-bg-dark/50">
+                    <div class="flex items-start gap-2">
+                        <div class="px-1.5 py-1 rounded bg-primary/20 flex-shrink-0 flex items-center justify-center text-primary text-[9px] font-bold">CHARLIE</div>
+                        <div class="bg-white/5 text-gray-200 text-sm p-3 rounded-2xl rounded-tl-none">
+                            Bonjour ! Je connais tout le parcours de Roslin. Posez-moi une question !
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3 border-t border-white/10 bg-bg-card">
+                    <form onsubmit="sendMessage(event)" class="relative">
+                        <input type="text" id="chat-input" class="w-full bg-bg-dark border border-white/10 rounded-xl py-3 pl-4 pr-12 text-sm text-white focus:ring-1 focus:ring-primary focus:border-primary outline-none" placeholder="Posez une question..." autocomplete="off">
+                        <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-primary rounded-lg text-white hover:bg-blue-600 transition-colors disabled:opacity-50" id="send-btn">
+                            <span class="material-symbols-outlined text-sm">send</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="relative group">
+                <div id="chat-tooltip" class="absolute bottom-full left-0 mb-3 w-48 hidden">
+                    <div class="bg-white text-bg-dark text-xs font-bold py-2 px-3 rounded-xl shadow-lg relative bounce-in">
+                        👋 Une question sur mon CV ? Demandez à mon IA !
+                        <div class="absolute -bottom-1 left-6 w-3 h-3 bg-white transform rotate-45"></div>
+                    </div>
+                </div>
+
+                <button onclick="toggleChat()" class="relative flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary text-white shadow-2xl hover:shadow-primary/50 transition-all hover:scale-110 active:scale-95 group">
+                    <div class="pulse-ring"></div>
+                    
+                    <span class="font-black text-[10px] uppercase tracking-widest relative z-10 group-hover:scale-110 transition-transform">CHARLIE</span>
+                    
+                    <span class="absolute top-0 right-0 h-4 w-4 rounded-full bg-red-500 border-2 border-bg-dark z-20"></span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <script>
+        // --- 0. DICTIONNAIRE DE PROJETS DÉTAILLÉS ---
+        const projectDetails = {
+            "App Web Gestion Décodeur": `
+                <strong>Description :</strong> Gestion complète de décodeurs TV pour une entreprise.<br>
+                <strong>Architecture :</strong> Backend robuste en C#, API intermédiaire Node.js et Frontend React.<br>
+                <strong>Détails :</strong> Ce projet permet le suivi des stocks, l'attribution aux clients et la gestion des pannes.
+            `,
+            "Logiciel Location Bus": `
+                <strong>Description :</strong> Application de gestion de flotte de bus.<br>
+                <strong>Technique :</strong> Développé en C# avec Windows Forms.<br>
+                <strong>Particularité :</strong> Utilisation de JSON pour sauvegarder les données localement sans base de données lourde.
+            `,
+            "Client/Serveur Socket C#": `
+                <strong>Description :</strong> Système de chat et d'échange de fichiers en temps réel.<br>
+                <strong>Technique :</strong> Utilisation des Sockets TCP/IP et gestion du multi-threading pour gérer plusieurs clients simultanément.
+            `,
+            "Labo Hardening Linux": `
+                <strong>Objectif :</strong> Sécurisation complète d'un serveur Ubuntu.<br>
+                <strong>Actions :</strong> Configuration SSH (clés, port), Pare-feu UFW, Fail2Ban et gestion stricte des droits utilisateurs.
+            `,
+            "Analyse Wireshark": `
+                <strong>Contexte :</strong> Analyse de trafic réseau suspect pour identifier une intrusion.<br>
+                <strong>Outils :</strong> Wireshark, filtres avancés, reconstruction de flux TCP.
+            `
+        };
+
+        // --- 1. SCRIPT EFFET CIPHER (HACKER TEXT) ---
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&";
+
+        function runCyberEffect(event) {
+            let iteration = 0;
+            const target = event.target;
+            // On vérifie si on a déjà stocké la valeur, sinon on la prend maintenant
+            if (!target.dataset.value) target.dataset.value = target.innerText;
+            const originalText = target.dataset.value;
+
+            clearInterval(target.interval);
+
+            target.interval = setInterval(() => {
+                target.innerText = originalText
+                    .split("")
+                    .map((letter, index) => {
+                        if (index < iteration) {
+                            return originalText[index];
+                        }
+                        return letters[Math.floor(Math.random() * letters.length)];
+                    })
+                    .join("");
+
+                if (iteration >= originalText.length) {
+                    clearInterval(target.interval);
+                }
+
+                iteration += 1 / 3;
+            }, 30);
+        }
+
+        // --- 2. LOGIQUE DU PORTFOLIO ---
+        function openModal(element) {
+            const modal = document.getElementById('modal');
+            const linkBtn = document.getElementById('modal-link');
+            const titleElement = document.getElementById('modal-title');
+            const descElement = document.getElementById('modal-desc');
+            
+            const title = element.getAttribute('data-title');
+            const shortDesc = element.getAttribute('data-desc');
+            
+            titleElement.textContent = title;
+            document.getElementById('modal-img').src = element.getAttribute('data-img');
+            document.getElementById('modal-category').textContent = element.getAttribute('data-category');
+            
+            /* SÉCURITÉ XSS : Bien que ce contenu soit statique (défini dans le script), 
+               pour une application dynamique réelle, il faudrait utiliser une librairie 
+               comme DOMPurify avant d'utiliser innerHTML. Ici, la source est de confiance. */
+            if (projectDetails[title]) {
+                descElement.innerHTML = DOMPurify.sanitize(projectDetails[title]); 
+            } else {
+                descElement.textContent = shortDesc; 
+            }
+
+            const link = element.getAttribute('data-link');
+            if (link) {
+                linkBtn.href = link;
+                linkBtn.classList.remove('hidden');
+                linkBtn.classList.add('inline-flex');
+            } else {
+                linkBtn.classList.add('hidden');
+                linkBtn.classList.remove('inline-flex');
+            }
+
+            const sourceTags = element.querySelector('.tags-source');
+            const targetTags = document.getElementById('modal-tags');
+            if (sourceTags) targetTags.innerHTML = sourceTags.innerHTML;
+            else targetTags.innerHTML = '';
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; 
+            setTimeout(() => { modal.classList.remove('opacity-0'); }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
-            // 1. Fade-in
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
+                entries.forEach(e => e.isIntersecting && e.target.classList.add('visible'));
             }, { threshold: 0.1 });
             document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
 
-            // 2. Machine à écrire
             const textElement = document.getElementById('typewriter');
             const phrases = ["Futur Expert Cyber", "Développeur C#", "Analyste Réseau", "Passionné du Cloud"];
             let phraseIndex = 0; let charIndex = 0; let isDeleting = false; let typeSpeed = 100;
 
             function type() {
-                const currentPhrase = phrases[phraseIndex];
-                if (isDeleting) {
-                    textElement.textContent = currentPhrase.substring(0, charIndex - 1);
-                    charIndex--;
-                    typeSpeed = 50; 
-                } else {
-                    textElement.textContent = currentPhrase.substring(0, charIndex + 1);
-                    charIndex++;
-                    typeSpeed = 100;
-                }
-                if (!isDeleting && charIndex === currentPhrase.length) {
-                    isDeleting = true; typeSpeed = 2000;
-                } else if (isDeleting && charIndex === 0) {
-                    isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500;
-                }
+                const current = phrases[phraseIndex];
+                if (isDeleting) { charIndex--; typeSpeed = 50; } 
+                else { charIndex++; typeSpeed = 100; }
+                textElement.textContent = current.substring(0, charIndex);
+                if (!isDeleting && charIndex === current.length) { typeSpeed = 2000; isDeleting = true; } 
+                else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500; }
                 setTimeout(type, typeSpeed);
             }
             if(textElement) type();
 
-            // 3. ScrollSpy & BackToTop
-            const sections = document.querySelectorAll("section");
-            const navLinks = document.querySelectorAll(".nav-link");
             const backToTopBtn = document.getElementById("backToTop");
-
             window.addEventListener("scroll", () => {
-                let current = "";
-                sections.forEach((section) => {
-                    const sectionTop = section.offsetTop;
-                    if (scrollY >= sectionTop - 150) {
-                        current = section.getAttribute("id");
-                    }
-                });
-                navLinks.forEach((link) => {
-                    link.classList.remove("text-primary");
-                    if (link.getAttribute("href").includes(current)) {
-                        link.classList.add("text-primary");
-                    }
-                });
-                
-                if (window.scrollY > 500) {
-                    backToTopBtn.classList.remove("opacity-0", "translate-y-10");
-                } else {
-                    backToTopBtn.classList.add("opacity-0", "translate-y-10");
+                if (window.scrollY > 500) backToTopBtn.classList.remove("opacity-0", "translate-y-10");
+                else backToTopBtn.classList.add("opacity-0", "translate-y-10");
+            });
+
+            // Initialisation de l'effet Cyber sur les titres
+            const cyberElements = document.querySelectorAll(".cyber-text");
+            cyberElements.forEach(element => {
+                element.dataset.value = element.innerText;
+                element.onmouseover = runCyberEffect;
+            });
+
+            // Lazy-load images and ensure alt presence
+            document.querySelectorAll('img').forEach(img => {
+                if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+                if (!img.getAttribute('alt')) img.setAttribute('alt', 'Image');
+            });
+
+            // Accessibility: close modal with Escape and manage focus restore
+            let previousActiveElement = null;
+            const modal = document.getElementById('modal');
+            document.addEventListener('keydown', (ev) => {
+                if (ev.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
                 }
             });
+
+            // Enhance openModal/closeModal to manage focus (monkey patch)
+            const _openModal = openModal;
+            openModal = function(element) {
+                previousActiveElement = document.activeElement;
+                _openModal(element);
+                const titleEl = document.getElementById('modal-title');
+                titleEl.setAttribute('tabindex', '-1');
+                titleEl.focus();
+            }
+            const _closeModal = closeModal;
+            closeModal = function() {
+                _closeModal();
+                if (previousActiveElement) previousActiveElement.focus();
+            }
         });
 
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        // --- 3. SCRIPT WIDGET SOC (LOGS) ---
+        const logMessages = [
+            "[INFO] Initializing handshake with client...",
+            "[NET] Verifying IP origin reputation...",
+            "[SEC] WAF: No SQL injection pattern detected.",
+            "[AUTH] Guest session token generated.",
+            "[INFO] Loading assets from secure CDN...",
+            "[NET] Latency check: 24ms (Optimal).",
+            "[SEC] XSS Filter: ACTIVE.",
+            "[INFO] CSP Headers verified.",
+            "[SRV] Heartbeat signal sent.",
+            "[NET] TCP Connection established: Port 443.",
+            "[SEC] Analyzing User-Agent signature...",
+            "[INFO] DOM integrity check passed.",
+            "[CLOUD] AWS CloudFront cache hit.",
+            "[SEC] DDOS Protection: Standby mode.",
+            "[INFO] Rendering graphical interface..."
+        ];
+
+        const logContainer = document.getElementById('log-container');
+        const socWidget = document.getElementById('soc-widget');
+        const socIcon = document.getElementById('soc-icon');
+        let isSocOpen = true;
+        let logTimer = null;
+
+        function addLog() {
+            if (!isSocOpen) return;
+
+            const msg = logMessages[Math.floor(Math.random() * logMessages.length)];
+            const time = new Date().toLocaleTimeString('fr-FR', { hour12: false });
+
+            const line = document.createElement('div');
+            line.className = "opacity-0 transform translate-x-4 transition-all duration-300 border-l-2 border-transparent hover:border-primary pl-2 hover:bg-white/5";
+            line.innerHTML = `<span class="text-gray-500">[${time}]</span> ${msg}`;
+
+            logContainer.appendChild(line);
+
+            setTimeout(() => { line.classList.remove('opacity-0', 'translate-x-4'); }, 50);
+
+            const scrollElement = document.getElementById('soc-content');
+            scrollElement.scrollTop = scrollElement.scrollHeight;
+
+            if (logContainer.children.length > 20) {
+                logContainer.removeChild(logContainer.firstChild);
+            }
+
+            logTimer = setTimeout(addLog, Math.random() * 2500 + 500);
         }
+
+        function toggleSoc() {
+            const content = document.getElementById('soc-content');
+            if (isSocOpen) {
+                content.style.display = 'none';
+                socWidget.classList.remove('h-auto');
+                socWidget.classList.add('h-10');
+                socIcon.innerText = 'expand_less';
+                if (logTimer) { clearTimeout(logTimer); logTimer = null; }
+            } else {
+                content.style.display = 'block';
+                socWidget.classList.remove('h-10');
+                socWidget.classList.add('h-auto');
+                socIcon.innerText = 'expand_more';
+                addLog();
+            }
+            isSocOpen = !isSocOpen;
+        }
+        logTimer = setTimeout(addLog, 1000);
+
+        // --- 4. LOGIQUE CHATBOT IA ---
+
+        // NOTE SÉCURITÉ : La clé API a été retirée du client. Utiliser un proxy serveur `/api/chat`.
+
+        const originalToggleChat = function() {
+            const chatWindow = document.getElementById('chat-window');
+            chatWindow.classList.toggle('hidden');
+            chatWindow.classList.toggle('flex');
+        };
+
+        function toggleChat() {
+            document.getElementById('chat-tooltip').classList.add('hidden');
+            originalToggleChat();
+        }
+
+        function addMessage(text, isUser) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const formattedText = text.replace(/\n/g, '<br>');
+            const msgHtml = isUser 
+                ? `<div class="flex items-end justify-end gap-2"><div class="bg-primary text-white text-sm p-3 rounded-2xl rounded-tr-none max-w-[80%]">${formattedText}</div></div>`
+                : `<div class="flex items-start gap-2"><div class="px-1.5 py-1 rounded bg-primary/20 flex-shrink-0 flex items-center justify-center text-primary text-[9px] font-bold">CHARLIE</div><div class="bg-white/5 text-gray-200 text-sm p-3 rounded-2xl rounded-tl-none max-w-[90%]">${formattedText}</div></div>`;
+            messagesDiv.insertAdjacentHTML('beforeend', msgHtml);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function showTyping() {
+            const messagesDiv = document.getElementById('chat-messages');
+            const id = 'typing-' + Date.now();
+            const html = `<div id="${id}" class="flex items-start gap-2"><div class="px-1.5 py-1 rounded bg-primary/20 flex-shrink-0 flex items-center justify-center text-primary text-[9px] font-bold">CHARLIE</div><div class="bg-white/5 text-gray-200 text-sm p-3 rounded-2xl rounded-tl-none flex gap-1"><div class="w-1.5 h-1.5 bg-gray-400 rounded-full typing-dot"></div><div class="w-1.5 h-1.5 bg-gray-400 rounded-full typing-dot"></div><div class="w-1.5 h-1.5 bg-gray-400 rounded-full typing-dot"></div></div></div>`;
+            messagesDiv.insertAdjacentHTML('beforeend', html);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            return id;
+        }
+
+        async function sendMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const btn = document.getElementById('send-btn');
+            const text = input.value.trim();
+            if (!text) return;
+            addMessage(text, true);
+            input.value = '';
+            input.disabled = true;
+            btn.disabled = true;
+            const typingId = showTyping();
+
+            const contextInfo = `Tu es l'assistant du portfolio de Zoyem Roslin Kenne. Étudiant en informatique (Cyber/Cloud) à l'UQTR. Compétences: C#, Python, Java, Wireshark. Réponds brièvement en français à : ${text}`;
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text, context: contextInfo })
+                });
+
+                document.getElementById(typingId).remove();
+                if (!response.ok) {
+                    addMessage('⚠️ Problème technique (vérifier le serveur).', false);
+                    return;
+                }
+                const data = await response.json();
+                if (data.reply) {
+                    addMessage(data.reply, false);
+                } else if (data.error) {
+                    addMessage('⚠️ ' + data.error, false);
+                } else {
+                    addMessage("Je n'ai pas reçu de réponse.", false);
+                }
+            } catch (error) {
+                document.getElementById(typingId)?.remove();
+                console.error(error);
+                addMessage('⚠️ Erreur de connexion.', false);
+            } finally {
+                input.disabled = false;
+                btn.disabled = false;
+                input.focus();
+            }
+        }
+
+        setTimeout(() => {
+            const tooltip = document.getElementById('chat-tooltip');
+            const chatWindow = document.getElementById('chat-window');
+            if (chatWindow.classList.contains('hidden')) {
+                tooltip.classList.remove('hidden');
+            }
+        }, 2500);
+
+        // --- 5. CVE SEARCH (MOCK) ---
+        let cveData = [];
+        async function loadCveData() {
+            try {
+                const r = await fetch('/cve_mock.json');
+                cveData = await r.json();
+            } catch (err) {
+                console.warn('Impossible de charger cve_mock.json', err);
+                cveData = [];
+            }
+        }
+
+        function badgeForSeverity(sev) {
+            if (!sev) return '';
+            const s = sev.toUpperCase();
+            if (s === 'CRITICAL') return '<span class="badge-critical">CRITICAL</span>';
+            if (s === 'HIGH') return '<span class="badge-high">HIGH</span>';
+            if (s === 'MEDIUM') return '<span class="badge-medium">MEDIUM</span>';
+            return '<span class="badge-low">LOW</span>';
+        }
+
+        function renderCveResults(list) {
+            const container = document.getElementById('cve-results');
+            container.innerHTML = '';
+            if (!list.length) {
+                container.innerHTML = '<div class="text-text-muted">Aucun résultat.</div>';
+                return;
+            }
+            list.forEach(cve => {
+                const el = document.createElement('div');
+                el.className = 'mb-3 p-3 rounded bg-white/3';
+                el.innerHTML = `
+                    <div class="flex justify-between items-start gap-2">
+                        <div class="font-bold text-white">${cve.id} ${badgeForSeverity(cve.severity)}</div>
+                        <div class="text-text-muted text-sm">${cve.published}</div>
+                    </div>
+                    <div class="text-text-muted mt-2">${cve.summary}</div>
+                    <div class="mt-2 flex items-center gap-2">
+                        <a class="text-primary text-sm font-bold" href="${cve.link}" target="_blank">Voir sur NVD</a>
+                        <button class="text-sm px-2 py-1 rounded bg-white/5 copy-btn" data-cve="${cve.id}">Copier</button>
+                    </div>
+                `;
+                container.appendChild(el);
+            });
+            container.scrollTop = 0;
+
+            // attach copy handlers
+            container.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = btn.getAttribute('data-cve');
+                    navigator.clipboard?.writeText(id).then(() => {
+                        btn.textContent = 'Copié';
+                        setTimeout(() => btn.textContent = 'Copier', 1500);
+                    }).catch(() => {
+                        btn.textContent = 'Erreur';
+                    });
+                });
+            });
+        }
+
+        async function performCveSearch() {
+            const q = document.getElementById('cve-input').value.trim().toLowerCase();
+            if (!q) return renderCveResults(cveData.slice(0, 10));
+            const list = cveData.filter(c => c.id.toLowerCase().includes(q) || c.summary.toLowerCase().includes(q));
+            renderCveResults(list);
+        }
+
+        document.getElementById('cve-search-btn').addEventListener('click', performCveSearch);
+        document.getElementById('cve-input').addEventListener('keyup', (e) => { if (e.key === 'Enter') performCveSearch(); });
+        loadCveData();
+
+        // --- 6. SOC IMPROVEMENTS (Simulated alerts, pause & filter) ---
+        let socPausedLocal = false;
+        const socPauseBtn = document.getElementById('soc-pause');
+        const socSeverityFilter = document.getElementById('soc-severity-filter');
+        const socAlertsContainer = document.getElementById('soc-alerts');
+
+        const socTemplates = [
+            {msg: 'Détection: trafic sortant anormal vers 45.33.12.7', severity: 'HIGH'},
+            {msg: 'ALERTE: Tentative d injection SQL bloquée.', severity: 'CRITICAL'},
+            {msg: 'Suspicious login attempt from 198.51.100.22', severity: 'MEDIUM'},
+            {msg: 'Host 10.0.0.5: connexion TLS valide', severity: 'LOW'},
+            {msg: 'EDR: Processus suspect exécuté (shellcode détecté)', severity: 'CRITICAL'},
+            {msg: 'WAF: payload bloqué (XSS)', severity: 'HIGH'}
+        ];
+
+        function addSocAlert(alert) {
+            const filter = socSeverityFilter.value;
+            if (filter !== 'ALL' && filter !== alert.severity) return;
+            const div = document.createElement('div');
+            div.className = `soc-alert ${alert.severity.toLowerCase()}`;
+            div.innerHTML = `<div class="flex justify-between items-start"><div class="font-bold">${alert.severity}</div><div class="text-text-muted text-xs">${new Date().toLocaleTimeString('fr-FR', {hour12:false})}</div></div><div class="mt-1">${alert.msg}</div>`;
+            div.addEventListener('click', () => {
+                div.style.opacity = '0.5';
+                div.style.textDecoration = 'line-through';
+            });
+            socAlertsContainer.prepend(div);
+            // keep list short
+            while (socAlertsContainer.children.length > 40) socAlertsContainer.removeChild(socAlertsContainer.lastChild);
+        }
+
+        function socTick() {
+            if (socPausedLocal) return;
+            if (Math.random() < 0.7) { // make alerts frequent
+                const t = socTemplates[Math.floor(Math.random() * socTemplates.length)];
+                addSocAlert({msg: t.msg, severity: t.severity});
+            }
+        }
+
+        socPauseBtn.addEventListener('click', () => {
+            socPausedLocal = !socPausedLocal;
+            socPauseBtn.textContent = socPausedLocal ? 'Reprendre' : 'Pause';
+        });
+
+        socSeverityFilter.addEventListener('change', () => {
+            // re-render by filtering existing data source (simple approach: clear and show last N matching)
+            // For simulation we just clear container for simplicity.
+            socAlertsContainer.innerHTML = '';
+        });
+
+        // Start background alert generation
+        setInterval(socTick, 1500);
+
+        // Small integration: when log messages contain "SQL injection" or "XSS" add a correlated SOC alert
+        const _addLog = addLog;
+        addLog = function() {
+            const oldArgs = arguments; // not used, but keep signature
+            _addLog();
+            // check last log message
+            const last = logContainer.lastElementChild;
+            if (last && /SQL injection|XSS|WAF|EDR|injection SQL/i.test(last.innerText)) {
+                addSocAlert({msg: 'Corrélation: pattern d attaque détecté dans les logs', severity: 'HIGH'});
+            }
+        };
+
+        // Load a few initial alerts
+        addSocAlert({msg: 'Initialisation SOC: Règles chargées', severity: 'LOW'});
+        addSocAlert({msg: "EDR: Agents en ligne sur 37 hôtes", severity: 'MEDIUM'});
+        addSocAlert({msg: 'WAF: règle 34 appliquée', severity: 'LOW'});
+
+        // --- 7. MINI CTF (Static) ---
+        const CTF_FLAG = 'CTF{keeps_it_simple_2026}';
+        const encodedEl = document.getElementById('ctf-encoded');
+        const decodeBtn = document.getElementById('ctf-decode-btn');
+        const copyEncodedBtn = document.getElementById('ctf-copy-encoded');
+        const ctfInput = document.getElementById('ctf-input');
+        const ctfSubmit = document.getElementById('ctf-submit-btn');
+        const ctfFeedback = document.getElementById('ctf-feedback');
+
+        if (decodeBtn) {
+            decodeBtn.addEventListener('click', () => {
+                const enc = encodedEl.getAttribute('data-encoded');
+                try {
+                    const decoded = atob(enc);
+                    encodedEl.textContent = decoded;
+                    decodeBtn.textContent = 'Révélé';
+                } catch (err) {
+                    encodedEl.textContent = 'Erreur de décodage';
+                }
+            });
+        }
+
+        if (copyEncodedBtn) {
+            copyEncodedBtn.addEventListener('click', () => {
+                const enc = encodedEl.getAttribute('data-encoded');
+                navigator.clipboard?.writeText(enc).then(() => {
+                    copyEncodedBtn.textContent = 'Copié';
+                    setTimeout(() => copyEncodedBtn.textContent = 'Copier', 1500);
+                }).catch(() => { copyEncodedBtn.textContent = 'Erreur'; });
+            });
+        }
+
+        function showCtfSuccess() {
+            ctfFeedback.innerHTML = '<div class="ctf-success">Bravo ! Flag validé. Badge obtenu ✅</div>';
+            localStorage.setItem('ctf_solved', '1');
+        }
+
+        function showCtfFail() {
+            ctfFeedback.innerHTML = '<div class="ctf-fail">Flag incorrect. Réessayer.</div>';
+        }
+
+        if (ctfSubmit) {
+            ctfSubmit.addEventListener('click', () => {
+                const v = ctfInput.value.trim();
+                if (!v) return;
+                if (v === CTF_FLAG) showCtfSuccess(); else showCtfFail();
+            });
+            ctfInput.addEventListener('keyup', (e) => { if (e.key === 'Enter') ctfSubmit.click(); });
+            // restore state
+            if (localStorage.getItem('ctf_solved')) showCtfSuccess();
+        }
+
+
     </script>
 </body>
 </html>
