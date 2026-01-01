@@ -1,5 +1,8 @@
 # Portfolio (static)
 
+![CI & Pages](https://github.com/RoslinKenne/portfolio/actions/workflows/pages-ci.yml/badge.svg)
+
+
 This repo is a single-file static portfolio (`index.html`) with a demo chatbot and SOC widget.
 
 Local preview (static):
