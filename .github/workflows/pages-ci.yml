@@ -1,0 +1,86 @@
+name: CI & Deploy Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Accessibility checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install tools
+        run: |
+          npm install -g http-server pa11y lighthouse
+
+      - name: Start local http server
+        run: |
+          npx http-server -p 8080 -c-1 . &
+          # wait for server to be ready
+          for i in {1..10}; do curl -sSf http://127.0.0.1:8080 && break || sleep 2; done
+
+      - name: Run pa11y (accessibility)
+        run: |
+          pa11y http://127.0.0.1:8080 --reporter html > pa11y-report.html || true
+
+      - name: Run Lighthouse (performance & accessibility)
+        run: |
+          lighthouse http://127.0.0.1:8080 --output html --output-path ./lighthouse-report.html --chrome-flags="--no-sandbox"
+
+      - name: Upload accessibility reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-reports
+          path: pa11y-report.html,lighthouse-report.html
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare site directory
+        run: |
+          mkdir -p site
+          rsync -av --exclude='.git' --exclude='.github' --exclude='server' --exclude='node_modules' --exclude='.gitignore' ./ site/
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
+
+      - name: Wait for Pages availability and run pa11y on deployed site
+        run: |
+          PAGE_URL="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY##*/}"
+          echo "Checking availability of $PAGE_URL"
+          for i in {1..20}; do curl -sSf "$PAGE_URL" && break || sleep 6; done
+          echo "Running pa11y against $PAGE_URL"
+          pa11y "$PAGE_URL" --reporter html > deployed-pa11y.html || true
+
+      - name: Upload deployed accessibility report
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployed-accessibility-report
+          path: deployed-pa11y.html
