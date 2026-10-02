@@ -20,7 +20,7 @@ const fs=require('node:fs');
     assert.equal(await page.locator('#mobileNav').evaluate(el=>el.hidden),true);
    }
    assert.equal(await page.locator('body').evaluate(el=>el.scrollWidth<=window.innerWidth),true);
-   const cv=await page.request.get(new URL('CV_stage_cyber_infonuagique_ATS.pdf',base).href);
+   const cv=await page.request.get(new URL('CV_Zoyem_Roslin_Kenne_Cybersecurite.pdf',base).href);
    assert.equal(cv.status(),200);assert.equal((await cv.body()).subarray(0,4).toString(),'%PDF');
    for(const image of await page.locator('img').all()) {
     await image.scrollIntoViewIfNeeded();
@@ -54,7 +54,7 @@ const fs=require('node:fs');
   assert.match(page.url(),/#projects$/);await context.close();
   const reduced=await browser.newContext({reducedMotion:'reduce'});const rp=await reduced.newPage();
   await rp.route('https://fonts.googleapis.com/**',r=>r.abort());await rp.goto(base);
-  assert.equal(await rp.locator('#typewriter').innerText(),'Passionné de cybersécurité');
+  assert.equal(await rp.locator('#typewriter').innerText(),'Cybersécurité & assurance qualité');
   assert.equal(await rp.locator('.animate-entry').count(),0);
   if(process.env.SCREENSHOT){await rp.screenshot({path:process.env.SCREENSHOT,fullPage:true});}
   await reduced.close();

@@ -2,6 +2,8 @@
 
 Site statique en français. Ouvrir index.html ou servir le dossier :
 
+Contenu actualisé le 2 octobre 2026 à partir du CV et de la lettre fournis : stage QA/sécurité, projets cyber 2026, fin de formation prévue en décembre 2026 et disponibilité en janvier 2027. Le CV téléchargeable est `CV_Zoyem_Roslin_Kenne_Cybersecurite.pdf`. Les descriptions du stage restent générales et ne publient aucune donnée client. La lettre n'est pas publiée.
+
 ```sh
 python3 -m http.server 8000
 ```
