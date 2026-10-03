@@ -1,63 +1,14 @@
-const {chromium}=require('playwright');
-const assert=require('node:assert/strict');
-const fs=require('node:fs');
-(async()=>{
- const base=process.env.TEST_URL||'http://127.0.0.1:8011/portfolio/';
- const browser=await chromium.launch({headless:true});
- try {
-  for(const width of [390,1280]) {
-   const context=await browser.newContext({viewport:{width,height:900}});
-   const page=await context.newPage();const errors=[];
-   page.on('pageerror',e=>errors.push(e.message));
-   await page.route('https://fonts.googleapis.com/**',r=>r.abort());
-   await page.goto(base,{waitUntil:'networkidle'});
-   if(width<768) {
-    await page.getByRole('button',{name:'Ouvrir le menu'}).click();
-    assert.equal(await page.locator('#menuToggle').getAttribute('aria-expanded'),'true');
-    await page.locator('#mobileNav a[href="#projects"]').click();
-    assert.equal(await page.locator('#menuToggle').getAttribute('aria-expanded'),'false');
-    await page.getByRole('button',{name:'Ouvrir le menu'}).click();await page.keyboard.press('Escape');
-    assert.equal(await page.locator('#mobileNav').evaluate(el=>el.hidden),true);
-   }
-   assert.equal(await page.locator('body').evaluate(el=>el.scrollWidth<=window.innerWidth),true);
-   const cv=await page.request.get(new URL('CV_Zoyem_Roslin_Kenne_Cybersecurite.pdf',base).href);
-   assert.equal(cv.status(),200);assert.equal((await cv.body()).subarray(0,4).toString(),'%PDF');
-   for(const image of await page.locator('img').all()) {
-    await image.scrollIntoViewIfNeeded();
-    await image.evaluate(el=>el.decode());
-    assert.equal(await image.evaluate(el=>el.naturalWidth>0),true);
-   }
-   await page.getByLabel('Nom',{exact:true}).fill('Test local');
-   await page.getByLabel('Email',{exact:true}).fill('local@example.test');
-   await page.getByLabel('Message',{exact:true}).fill('Validation locale sans envoi réel.');
-   if(base.includes('8012') || process.env.TEST_PHP==='1') {
-    await page.getByRole('button',{name:'Envoyer le message'}).click();
-    await page.getByRole('status').waitFor();
-    assert.match(await page.getByRole('status').innerText(),/temporairement indisponible/);
-   } else {
-    let submitted=false;
-    await page.route('https://formspree.io/**',async route=>{
-     assert.equal(route.request().method(),'POST');assert.match(route.request().postData(),/local%40example.test/);
-     submitted=true;await route.fulfill({status:200,contentType:'text/html',body:'Envoi simulé localement'});
-    });
-    await page.getByRole('button',{name:'Envoyer le message'}).click();
-    await page.waitForURL('https://formspree.io/**');assert.equal(submitted,true);
-   }
-   assert.deepEqual(errors,[]);
-   await context.close();
-  }
-  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:900}});
-  const page=await context.newPage();await page.route('https://fonts.googleapis.com/**',r=>r.abort());
-  await page.goto(base);
-  assert.equal(await page.locator('.fade-in-up').first().evaluate(el=>getComputedStyle(el).opacity),'1');
-  await page.getByRole('navigation',{name:'Navigation mobile sans JavaScript'}).getByRole('link',{name:'Projets'}).click();
-  assert.match(page.url(),/#projects$/);await context.close();
-  const reduced=await browser.newContext({reducedMotion:'reduce'});const rp=await reduced.newPage();
-  await rp.route('https://fonts.googleapis.com/**',r=>r.abort());await rp.goto(base);
-  assert.equal(await rp.locator('#typewriter').innerText(),'Cybersécurité & assurance qualité');
-  assert.equal(await rp.locator('.animate-entry').count(),0);
-  if(process.env.SCREENSHOT){await rp.screenshot({path:process.env.SCREENSHOT,fullPage:true});}
-  await reduced.close();
-  console.log('Navigateur : mobile, desktop, menu, images, CV, contact, sans JS et réduction des mouvements OK');
- } finally {await browser.close();}
-})().catch(e=>{console.error(e);process.exitCode=1;});
+const {chromium}=require('playwright'),assert=require('node:assert/strict');
+(async()=>{const base=process.env.TEST_URL||'http://127.0.0.1:8015/';const b=await chromium.launch();try{
+ for(const width of [320,390,1280]){const p=await b.newPage({viewport:{width,height:900},reducedMotion:'reduce'});const errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto(base);
+ assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));assert.equal(await p.locator('#projects article').count(),6);assert.equal(await p.locator('.card-media img').count(),15);
+ for(const img of await p.locator('.card-media img').all()){await img.scrollIntoViewIfNeeded();await img.evaluate(el=>el.decode());}
+ for(const name of ['CV.pdf','CV_Zoyem_Roslin_Kenne_Cybersecurite.pdf']){const r=await p.request.get(new URL(name,base).href);assert.equal(r.status(),200);assert.equal((await r.body()).subarray(0,4).toString(),'%PDF');}
+ const texts=await p.evaluate(()=>Object.fromEntries(['about','experience','skills','education','certifications','projects','contact'].map(k=>[k,document.getElementById(k).textContent.replace(/\s+/g,' ').trim()])));
+ await p.locator('#agent-launcher').click();await p.locator('[data-agent="projects"]').click();assert.equal(await p.locator('.agent-message').count(),3);await p.keyboard.press('Escape');assert.ok(!await p.locator('#agent-window').isVisible());assert.equal(await p.locator('#motion').isChecked(),false);
+ await p.locator('[data-tool="dmarc"]').click();assert.match(await p.locator('#tool-title').innerText(),/courriel/);
+ let sent=false;await p.route('https://formspree.io/**',async route=>{assert.equal(route.request().method(),'POST');sent=true;await route.fulfill({status:200,contentType:'text/html',body:'Envoi intercepté par le test'});});await p.locator('#contact-name').fill('Test local');await p.locator('#contact-email').fill('local@example.test');await p.locator('#contact-message').fill('Test sans envoi réel');await p.locator('#contact form button').click();await p.waitForURL('https://formspree.io/**');assert.ok(sent);
+ await p.route('https://fonts.googleapis.com/**',r=>r.abort());await p.goto(new URL('archives/2026-10-02/',base).href,{waitUntil:'domcontentloaded'});const archived=await p.evaluate(()=>Object.fromEntries(['about','experience','skills','education','certifications','projects','contact'].map(k=>[k,document.getElementById(k).textContent.replace(/\s+/g,' ').trim()])));assert.deepEqual(texts,archived);assert.deepEqual(errors,[]);await p.close();console.log('Validated publication and archive at '+width+'px');
+ }
+ const p=await b.newPage({javaScriptEnabled:false,viewport:{width:390,height:900}});await p.goto(base);assert.ok(await p.locator('#projects').isVisible());assert.ok(await p.locator('.site-header a[href="#projects"]').isVisible());assert.ok(await p.locator('#contact form').isVisible());await p.close();console.log('Content and navigation available without JavaScript');
+}finally{await b.close();}})().catch(e=>{console.error(e);process.exit(1)});

@@ -1,341 +1,121 @@
-<!DOCTYPE html>
-<html class="dark" lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta property="og:title" content="Zoyem Roslin Kenne - Cybersécurité et assurance qualité">
-    <meta property="og:description" content="Finissant à l’UQTR : cybersécurité, assurance qualité, réseaux et systèmes. Expérience en audits Web et tests de sécurité. Disponible en janvier 2027.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://roslinkenne.github.io/portfolio/assets/image-2.jpg">
-
-    <title>Zoyem Roslin Kenne | Cybersécurité, QA et réseaux</title>
-    <meta name="description" content="Finissant en informatique à l’UQTR, profil cybersécurité et infonuagique. Audits Web, assurance qualité, réseaux et systèmes. Disponible en janvier 2027.">
-    <link rel="canonical" href="https://roslinkenne.github.io/portfolio/">
-
-    <link rel="stylesheet" href="styles.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
-
-
-    <style>
-        html { scroll-behavior: smooth; }
-        body { background-color: #0B0F19; color: #F3F4F6; }
-
-        /* Texture de fond */
-        .bg-grid {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        }
-
-        /* Effet de lueur */
-        .glow-effect {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
-
-        /* Animations Fade-in */
-        .fade-in-up { opacity: 1; transform: none; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        .animate-entry { opacity: 0; transform: translateY(20px); }
-        .visible { opacity: 1; transform: translateY(0); }
-        @media (prefers-reduced-motion: reduce) {
-            html { scroll-behavior: auto; }
-            *, *::before, *::after { animation: none !important; transition: none !important; }
-            .animate-entry { opacity: 1; transform: none; }
-        }
-
-        /* Curseur machine à écrire */
-        .cursor-blink { animation: blink 1s step-end infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0B0F19; }
-        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3B82F6; }
-    </style>
-</head>
-
-<body class="font-display overflow-x-hidden bg-grid">
-
-    <div class="glow-effect"></div>
-
-    <div class="relative z-10 flex h-auto min-h-screen w-full flex-col">
-
-        <header class="sticky top-0 z-50 border-b border-white/5 bg-bg-dark/80 backdrop-blur-xl transition-all duration-300">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex h-16 items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/20 text-primary ring-1 ring-primary/50">
-                            <span class="material-symbols-outlined">◇</span>
-                        </div>
-                        <span class="text-lg font-bold tracking-tight text-white">Zoyem R.K.</span>
-                    </div>
-
-                    <nav aria-label="Navigation principale" class="hidden lg:flex items-center gap-5">
-                        <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#hero">Accueil</a>
-                        <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#about">À Propos</a>
-                        <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#skills">Compétences</a>
-                        <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#experience">Expérience</a>
-                        <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#education">Formation</a>
-                        <a class="nav-link text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#projects">Projets</a>
-                        <a href="#contact" class="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-primary/25 hover:bg-blue-600 transition-all hover:scale-105">
-                            Contact
-                        </a>
-                    </nav>
-
-                    <button id="menuToggle" type="button" aria-label="Ouvrir le menu" aria-controls="mobileNav" aria-expanded="false" class="lg:hidden text-white">
-                        <span class="material-symbols-outlined">☰</span>
-                    </button>
-                </div>
-            </div>
-            <nav id="mobileNav" aria-label="Navigation mobile" class="lg:hidden border-t border-white/10 px-4 py-4" hidden>
-                <div class="flex flex-col gap-4">
-                    <a href="#hero">Accueil</a>
-                    <a href="#about">À propos</a>
-                    <a href="#skills">Compétences</a>
-                    <a href="#experience">Expérience</a><a href="#education">Formation</a>
-                    <a href="#projects">Projets</a>
-                    <a href="#contact">Contact</a>
-                </div>
-            </nav>
-            <noscript><nav aria-label="Navigation mobile sans JavaScript" class="lg:hidden px-4 py-4 flex flex-wrap gap-4"><a href="#about">À propos</a><a href="#skills">Compétences</a><a href="#experience">Expérience</a><a href="#education">Formation</a><a href="#projects">Projets</a><a href="#contact">Contact</a></nav></noscript>
-        </header>
-
-        <main class="flex-grow">
-
-            <section id="hero" class="relative py-24 sm:py-32 lg:py-40 px-4 text-center">
-                <div class="mx-auto max-w-5xl">
-                    <div class="fade-in-up mx-auto mb-6 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur">
-                        <span class="relative flex h-2 w-2">
-                          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                          <span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+<!doctype html>
+<html lang="fr" data-design="e">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Zoyem Roslin Kenne · Cybersécurité et assurance qualité</title><meta name="description" content="Portfolio de Zoyem Roslin Kenne : cybersécurité, assurance qualité, réseaux et infonuagique. Projets, expérience et CV."><link rel="canonical" href="https://roslinkenne.github.io/portfolio/"><meta property="og:title" content="Zoyem Roslin Kenne · Cybersécurité"><meta property="og:type" content="website"><meta property="og:image" content="https://roslinkenne.github.io/portfolio/logo-cuivre-petrole.png"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="hybrid.css"><link rel="stylesheet" href="refined.css"><link rel="stylesheet" href="depth.css"><link rel="stylesheet" href="teleport.css"><link rel="icon" href="logo-cuivre-petrole.png"></head>
+<body><a class="skip-link" href="#home">Aller au contenu</a><div class="reading-progress" aria-hidden="true"><span></span></div>
+<div class="chooser refined-bar"><div><strong>Portfolio / 2026</strong><span>Cybersécurité · Assurance qualité</span></div><label class="motion-choice"><input id="motion" type="checkbox" checked> Animations</label><button id="compare" hidden>Comparer</button></div><aside id="intent" hidden></aside>
+<div class="site">
+ <header class="site-header"><a class="identity" href="#home"><span class="brand-symbol" aria-hidden="true"></span><span>Zoyem Roslin<br><strong>Kenne</strong></span></a><nav aria-label="Navigation du portfolio"><a href="#about">Profil</a><a href="#projects">Projets</a><a href="#experience">Expérience</a><a href="#skills">Compétences</a><a href="#lab">Laboratoire</a><a href="#cv">CV</a></nav><a class="contact-link" href="mailto:kenneroslin5@gmail.com">Échanger <span aria-hidden="true">↗</span></a><div class="rail-note">CYBERSÉCURITÉ<br>QA · INFONUAGIQUE<br><span>Trois-Rivières, QC</span></div></header>
+ <main>
+ <section class="hero" id="home">
+  <section class="hero-copy original-hero" id="hero-copy">
+                <div>
+                    <div>
+                        <span>
+                          <span></span>
+                          <span></span>
                         </span>
-                        <p class="text-xs font-medium text-white">Disponible dès janvier 2027 · Québec</p>
+                        <p>Disponible dès janvier 2027 · Québec</p>
                     </div>
 
-                    <h1 class="fade-in-up text-4xl font-black tracking-tight text-white sm:text-6xl md:text-7xl mb-6">
+                    <h1>
                         Zoyem Roslin Kenne <br>
-                        <span class="text-3xl sm:text-4xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary" id="typewriter" aria-label="Cybersécurité et assurance qualité">Cybersécurité &amp; assurance qualité</span><span class="text-3xl sm:text-4xl md:text-5xl text-primary cursor-blink" aria-hidden="true">|</span>
+                        <span id="typing" aria-hidden="true" aria-label="Cybersécurité et assurance qualité">Cybersécurité &amp; assurance qualité</span><span class="type-cursor" aria-hidden="true">|</span>
                     </h1>
 
-                    <p class="fade-in-up mx-auto max-w-3xl text-lg text-text-muted mb-8 leading-relaxed">
+                    <p>
                         Finissant en informatique à l’UQTR, profil cybersécurité et infonuagique. Je réalise des audits Web, des tests de sécurité et des validations logicielles, avec une attention particulière aux preuves et à la fiabilité des résultats.
                     </p>
 
-                    <div class="fade-in-up flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <a href="#projects" class="w-full sm:w-auto rounded-xl bg-primary px-8 py-4 text-base font-bold text-white shadow-lg shadow-primary/25 hover:bg-blue-600 transition-all hover:-translate-y-1">
+                    <div>
+                        <a href="#projects">
                             Voir mes projets
                         </a>
-                       <a href="CV_Zoyem_Roslin_Kenne_Cybersecurite.pdf" download="CV_Zoyem_Roslin_Kenne.pdf" class="w-full sm:w-auto rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-base font-bold text-white hover:bg-white/10 transition-all flex items-center justify-center gap-2">
-    <span class="material-symbols-outlined"></span> Télécharger mon CV
+                       <a href="CV.pdf" download="CV_Zoyem_Roslin_Kenne.pdf">
+    <span></span> Télécharger mon CV
 </a>
                     </div>
                 </div>
-            </section>
-
-            <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5 bg-white/[0.02]">
-    <div class="mx-auto max-w-7xl">
-        <div class="mb-12 text-center"><h2 class="text-3xl font-bold tracking-tight text-white">Un parcours devenu concret</h2>
-        <p class="mx-auto mt-4 max-w-3xl text-text-muted leading-relaxed">Cybersécurité, qualité logicielle et compréhension des systèmes.</p></div>
-        <div class="mx-auto max-w-4xl space-y-5 text-lg text-text-muted leading-relaxed">
-<p>Je suis <strong class="text-white">Zoyem Roslin Kenne</strong>, finissant au baccalauréat en informatique de l’Université du Québec à Trois-Rivières. La fin de mon programme est prévue en <strong class="text-white">décembre 2026</strong>.</p>
+            </section><div class="hero-visual"><div class="visual-top"><span>PARCOURS EN PRATIQUE</span><span class="mini-mark">RK / 26</span></div><div class="orbit"><span class="orbit-name brand-symbol" aria-hidden="true"></span><span class="orbit-tag t1">ANALYSER</span><span class="orbit-tag t2">VALIDER</span><span class="orbit-tag t3">DOCUMENTER</span></div><div class="visual-bottom"><div><strong>300</strong><span>sites audités manuellement</span></div><div><strong>02</strong><span>certificats Google obtenus</span></div></div><p class="visual-caption">Une démarche : des observations, des preuves, des recommandations.</p></div>
+ </section>
+ <section class="content-section" id="about">
+    <div>
+        <div><h2>Un parcours devenu concret</h2>
+        <p>Cybersécurité, qualité logicielle et compréhension des systèmes.</p></div>
+        <div>
+<p>Je suis <strong>Zoyem Roslin Kenne</strong>, finissant au baccalauréat en informatique de l’Université du Québec à Trois-Rivières. La fin de mon programme est prévue en <strong>décembre 2026</strong>.</p>
 <p>Mon stage en assurance qualité et sécurité logicielle m’a permis de passer des bases universitaires à des situations concrètes : audits de sécurité Web, validation de scans automatisés, tests fonctionnels et de régression, ainsi que tests d’intrusion autorisés. Je recoupe les résultats et documente des constats reproductibles.</p>
-<p>Je recherche un <strong class="text-white">premier poste en cybersécurité, QA, soutien informatique, réseaux ou systèmes</strong>, où contribuer tout en développant une expertise technique durable.</p>
-<p class="text-sm">Basé à Trois-Rivières · Français : langue maternelle · Anglais : professionnel · Mobile partout au Québec · Permis de conduire</p>
+<p>Je recherche un <strong>premier poste en cybersécurité, QA, soutien informatique, réseaux ou systèmes</strong>, où contribuer tout en développant une expertise technique durable.</p>
+<p>Basé à Trois-Rivières · Français : langue maternelle · Anglais : professionnel · Mobile partout au Québec · Permis de conduire</p>
 </div>
-    </div></section>
-
-            <section id="experience" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5 bg-white/[0.02]">
-    <div class="mx-auto max-w-7xl">
-        <div class="mb-12 text-center"><h2 class="text-3xl font-bold tracking-tight text-white">Expérience professionnelle</h2>
-        <p class="mx-auto mt-4 max-w-3xl text-text-muted leading-relaxed">Des constats vérifiables et des tests utiles à la qualité du produit.</p></div>
-        <article class="fade-in-up mx-auto max-w-4xl rounded-2xl border border-primary/30 bg-bg-card p-6 sm:p-8">
-<p class="mb-3 text-sm font-semibold text-primary">2026 · Stage de fin d’études à temps plein</p>
-<h3 class="text-2xl font-bold text-white">Assurance qualité et sécurité logicielle</h3>
-<p class="mt-4 text-text-muted leading-relaxed">Contribution à la validation d’une plateforme SaaS de cybersécurité multi-tenant, avec des audits manuels et des tests d’applications Web autorisés.</p>
-<ul class="mt-6 list-disc space-y-3 pl-5 text-text-muted leading-relaxed">
-<li><strong class="text-white">300 sites audités manuellement :</strong> configurations HTTPS/TLS, DNS et courriel, en-têtes HTTP et exigences de la Loi 25.</li>
-<li><strong class="text-white">Fiabilité des scans :</strong> validation manuelle des résultats, analyse des faux positifs, des faux négatifs et des cas limites.</li>
-<li><strong class="text-white">Qualité logicielle :</strong> scénarios fonctionnels et de régression, traçabilité des preuves et analyse d’écarts avec OWASP ASVS, NIST et la Loi 25.</li>
-<li><strong class="text-white">Tests de sécurité :</strong> reconnaissance, cartographie de la surface d’attaque et recoupement des résultats de Burp Suite, OWASP ZAP, Nuclei, Nmap et OpenVAS.</li>
-<li><strong class="text-white">Documentation :</strong> méthodes, constats et recommandations reproductibles, dans le respect de la confidentialité des données clients.</li>
+    </div></section><section class="content-section" id="experience">
+    <div>
+        <div><h2>Expérience professionnelle</h2>
+        <p>Des constats vérifiables et des tests utiles à la qualité du produit.</p></div>
+        <article>
+<p>2026 · Stage de fin d’études à temps plein</p>
+<h3>Assurance qualité et sécurité logicielle</h3>
+<p>Contribution à la validation d’une plateforme SaaS de cybersécurité multi-tenant, avec des audits manuels et des tests d’applications Web autorisés.</p>
+<ul>
+<li><strong>300 sites audités manuellement :</strong> configurations HTTPS/TLS, DNS et courriel, en-têtes HTTP et exigences de la Loi 25.</li>
+<li><strong>Fiabilité des scans :</strong> validation manuelle des résultats, analyse des faux positifs, des faux négatifs et des cas limites.</li>
+<li><strong>Qualité logicielle :</strong> scénarios fonctionnels et de régression, traçabilité des preuves et analyse d’écarts avec OWASP ASVS, NIST et la Loi 25.</li>
+<li><strong>Tests de sécurité :</strong> reconnaissance, cartographie de la surface d’attaque et recoupement des résultats de Burp Suite, OWASP ZAP, Nuclei, Nmap et OpenVAS.</li>
+<li><strong>Documentation :</strong> méthodes, constats et recommandations reproductibles, dans le respect de la confidentialité des données clients.</li>
 </ul></article>
-    </div></section>
-<section id="skills" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5 bg-white/[0.02]">
-    <div class="mx-auto max-w-7xl">
-        <div class="mb-12 text-center"><h2 class="text-3xl font-bold tracking-tight text-white">Compétences techniques</h2>
-        <p class="mx-auto mt-4 max-w-3xl text-text-muted leading-relaxed">Des outils mobilisés en stage, en projets universitaires et en laboratoires.</p></div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-2.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><h3 class="text-xl font-bold text-white">Sécurité Web et audits</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Audits HTTPS/TLS, DNS, courriel et en-têtes HTTP. Reconnaissance, validation manuelle et tests d’intrusion autorisés.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Burp Suite</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">OWASP ZAP</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Nuclei</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Nmap</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">OpenVAS</span></div></div></article><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-1.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><h3 class="text-xl font-bold text-white">QA et livraison logicielle</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Plans et cas de test, tests fonctionnels et de régression, analyse de résultats et traçabilité des preuves.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Playwright</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Jira</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Git</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">GitHub Actions</span></div></div></article><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-4.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><h3 class="text-xl font-bold text-white">Réseaux et systèmes</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">TCP/IP, sous-réseaux, routage, DNS, Windows et Linux. Analyse du trafic et automatisation de tâches.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Wireshark</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Scapy</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">PowerShell</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Bash</span></div></div></article><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-20.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><h3 class="text-xl font-bold text-white">Développement et données</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Programmation orientée objet, API REST, sérialisation JSON et lecture structurée de code applicatif.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Python</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Java</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">C#</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">SQL</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">PostgreSQL</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Django</span></div></div></article><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-5.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><h3 class="text-xl font-bold text-white">Conformité et sécurité défensive</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Analyse d’écarts, moindre privilège, gestion des vulnérabilités et corrélation de journaux. Référentiels étudiés et appliqués selon le contexte.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">OWASP ASVS</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">NIST</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Loi 25</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Splunk</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Sentinel</span></div></div></article><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-3.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><h3 class="text-xl font-bold text-white">Infonuagique et IA appliquée</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Bases Azure, AWS et IAM. Pipelines de classification, métriques de détection et évaluation de la robustesse des modèles.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Azure</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">AWS</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">scikit-learn</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">NumPy</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Matplotlib</span></div></div></article></div>
-    </div></section>
-<section id="education" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5 bg-white/[0.02]">
-    <div class="mx-auto max-w-7xl">
-        <div class="mb-12 text-center"><h2 class="text-3xl font-bold tracking-tight text-white">Formation</h2>
-        <p class="mx-auto mt-4 max-w-3xl text-text-muted leading-relaxed">Des bases universitaires appliquées aux réseaux, aux logiciels et à la sécurité.</p></div>
-        <div class="mx-auto max-w-4xl"><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><div class="p-6"><p class="mb-3 text-sm font-semibold text-primary">Formation universitaire</p><h3 class="text-xl font-bold text-white">Baccalauréat en informatique</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Université du Québec à Trois-Rivières (UQTR). Profil cybersécurité et infonuagique. Fin prévue : décembre 2026.<br><br>Programmation Web et orientée objet, structures de données, conception logicielle, réseaux, systèmes d’exploitation, architecture des ordinateurs, bases de données, probabilités et statistiques.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">2023–2026</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Finissant</span></div></div></article></div>
-    </div></section>
-
-  <section id="certifications" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5 bg-white/[0.02]">
-    <div class="mx-auto max-w-7xl">
-        <div class="mb-12 text-center"><h2 class="text-3xl font-bold tracking-tight text-white">Certifications et apprentissage</h2>
-        <p class="mx-auto mt-4 max-w-3xl text-text-muted leading-relaxed">Deux certificats obtenus ; une préparation en cours.</p></div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6"><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-5.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><h3 class="text-xl font-bold text-white">Google Cybersecurity Professional Certificate</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Obtenu en 2024. Formation aux fondamentaux de la cybersécurité, à l’analyse des journaux, à Linux, SQL et Python.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Obtenu · 2024</span></div></div></article><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-6.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><h3 class="text-xl font-bold text-white">Google IT Support Professional Certificate</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Obtenu en 2024. Formation au soutien technique, aux réseaux, aux systèmes et au dépannage.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Obtenu · 2024</span></div></div></article><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-7.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><h3 class="text-xl font-bold text-white">CompTIA Security+</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Préparation à l’examen en cours. Approfondissement des fondamentaux de sécurité, de la gestion des risques et de la cryptographie.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">En préparation</span></div></div></article></div>
-    </div></section>
-
-
-
-            <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-white/5 bg-white/[0.02]">
-    <div class="mx-auto max-w-7xl">
-        <div class="mb-12 text-center"><h2 class="text-3xl font-bold tracking-tight text-white">Projets techniques</h2>
-        <p class="mx-auto mt-4 max-w-3xl text-text-muted leading-relaxed">Mes travaux récents en cybersécurité, puis une sélection de projets de développement. Les liens mènent aux versions corrigées disponibles.</p></div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-4.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><p class="mb-3 text-sm font-semibold text-primary">Projet universitaire · 2026</p><h3 class="text-xl font-bold text-white">Simulation et analyse d’attaques réseau</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Laboratoire virtualisé isolé : simulation contrôlée d’ARP poisoning, de DNS spoofing et d’attaques de l’homme du milieu. Analyse du trafic, serveur TCP avec journalisation et recommandations de durcissement.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Python</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Kali Linux</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Debian</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Wireshark</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Scapy</span></div></div></article><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-2.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><p class="mb-3 text-sm font-semibold text-primary">Projet universitaire · 2026</p><h3 class="text-xl font-bold text-white">Robustesse d’un système de détection d’intrusion</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Pipeline de détection sur 10 000 observations NSL-KDD avec Random Forest. Évaluation du rappel, du F1-score et des faux négatifs, puis mesure de la dégradation face au label flipping et aux portes dérobées.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Python</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">scikit-learn</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Random Forest</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">NSL-KDD</span></div></div></article><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-10.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><p class="mb-3 text-sm font-semibold text-primary">Développement et réseaux</p><h3 class="text-xl font-bold text-white">Client et serveur sécurisés</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Application console C# de gestion de membres : échanges TCP sur TLS, authentification, droits d’accès et persistance. Tests des scénarios réseau et des opérations sur les membres.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">C#</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">.NET 8</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">TCP/TLS</span></div><a href="https://github.com/RoslinKenne/inf1010tp1-master-1-/tree/fix/all-projects-2026-10-02" target="_blank" rel="noopener noreferrer" class="mt-6 inline-block text-sm font-semibold text-primary underline">Voir le code</a></div></article><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-20.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><p class="mb-3 text-sm font-semibold text-primary">Développement logiciel</p><h3 class="text-xl font-bold text-white">Sérialiseur et désérialiseur JSON</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Projet Java utilisant la réflexion et des annotations pour convertir des objets, listes et tableaux. Tests des caractères échappés, des données invalides et des références cycliques.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Java</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">JSON</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Réflexion</span></div><a href="https://github.com/RoslinKenne/tp2inf1035g48-master/tree/fix/all-projects-2026-10-02" target="_blank" rel="noopener noreferrer" class="mt-6 inline-block text-sm font-semibold text-primary underline">Voir le code</a></div></article><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-18.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><p class="mb-3 text-sm font-semibold text-primary">IA appliquée</p><h3 class="text-xl font-bold text-white">Jeu de la vie : standard et neuronal</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Comparaison des règles classiques avec un modèle MLP entraîné à compter les voisins. Visualisation, exécution sans interface et tests d’égalité des deux modes.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Python</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">scikit-learn</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Matplotlib</span></div><a href="https://github.com/RoslinKenne/jeu-de-la-vie/tree/fix/all-projects-2026-10-02" target="_blank" rel="noopener noreferrer" class="mt-6 inline-block text-sm font-semibold text-primary underline">Voir le code</a></div></article><article class="fade-in-up overflow-hidden rounded-2xl border border-white/10 bg-bg-card"><img loading="lazy" decoding="async" src="assets/image-12.jpg" alt="" class="h-40 w-full object-cover" /><div class="p-6"><p class="mb-3 text-sm font-semibold text-primary">Algorithmique</p><h3 class="text-xl font-bold text-white">Validateur d’automates déterministes</h3><p class="mt-3 text-sm text-text-muted leading-relaxed">Application C# validant les états et les transitions d’un automate, puis évaluant des chaînes. Tests de déterminisme, de formats invalides et de chaîne vide.</p><div class="mt-5 flex flex-wrap gap-2"><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">C#</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">.NET 8</span><span class="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">Algorithmes</span></div><a href="https://github.com/RoslinKenne/tp1-master-1-/tree/fix/all-projects-2026-10-02" target="_blank" rel="noopener noreferrer" class="mt-6 inline-block text-sm font-semibold text-primary underline">Voir le code</a></div></article></div>
-    </div></section>
-
-            <section id="contact" class="relative py-24 px-4">
-                <div class="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-bg-card p-8 sm:p-12 shadow-2xl">
-                    <div class="text-center mb-10">
-                        <h2 class="text-3xl font-bold text-white">Contactez-moi</h2>
-                        <p class="mt-4 text-text-muted">Premier emploi dès janvier 2027 : cybersécurité, assurance qualité, soutien informatique, réseaux ou systèmes.</p>
+    </div></section><section class="content-section" id="skills">
+    <div>
+        <div><h2>Compétences techniques</h2>
+        <p>Des outils mobilisés en stage, en projets universitaires et en laboratoires.</p></div>
+        <div><article><div class="card-media" aria-hidden="true"><img src="assets/image-2.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><h3>Sécurité Web et audits</h3><p>Audits HTTPS/TLS, DNS, courriel et en-têtes HTTP. Reconnaissance, validation manuelle et tests d’intrusion autorisés.</p><div><span>Burp Suite</span><span>OWASP ZAP</span><span>Nuclei</span><span>Nmap</span><span>OpenVAS</span></div></div></article><article><div class="card-media" aria-hidden="true"><img src="assets/image-1.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><h3>QA et livraison logicielle</h3><p>Plans et cas de test, tests fonctionnels et de régression, analyse de résultats et traçabilité des preuves.</p><div><span>Playwright</span><span>Jira</span><span>Git</span><span>GitHub Actions</span></div></div></article><article><div class="card-media" aria-hidden="true"><img src="assets/image-4.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><h3>Réseaux et systèmes</h3><p>TCP/IP, sous-réseaux, routage, DNS, Windows et Linux. Analyse du trafic et automatisation de tâches.</p><div><span>Wireshark</span><span>Scapy</span><span>PowerShell</span><span>Bash</span></div></div></article><article><div class="card-media" aria-hidden="true"><img src="assets/image-20.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><h3>Développement et données</h3><p>Programmation orientée objet, API REST, sérialisation JSON et lecture structurée de code applicatif.</p><div><span>Python</span><span>Java</span><span>C#</span><span>SQL</span><span>PostgreSQL</span><span>Django</span></div></div></article><article><div class="card-media" aria-hidden="true"><img src="assets/image-5.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><h3>Conformité et sécurité défensive</h3><p>Analyse d’écarts, moindre privilège, gestion des vulnérabilités et corrélation de journaux. Référentiels étudiés et appliqués selon le contexte.</p><div><span>OWASP ASVS</span><span>NIST</span><span>Loi 25</span><span>Splunk</span><span>Sentinel</span></div></div></article><article><div class="card-media" aria-hidden="true"><img src="assets/image-3.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><h3>Infonuagique et IA appliquée</h3><p>Bases Azure, AWS et IAM. Pipelines de classification, métriques de détection et évaluation de la robustesse des modèles.</p><div><span>Azure</span><span>AWS</span><span>scikit-learn</span><span>NumPy</span><span>Matplotlib</span></div></div></article></div>
+    </div></section><section class="content-section" id="education">
+    <div>
+        <div><h2>Formation</h2>
+        <p>Des bases universitaires appliquées aux réseaux, aux logiciels et à la sécurité.</p></div>
+        <div><article><div><p>Formation universitaire</p><h3>Baccalauréat en informatique</h3><p>Université du Québec à Trois-Rivières (UQTR). Profil cybersécurité et infonuagique. Fin prévue : décembre 2026.<br><br>Programmation Web et orientée objet, structures de données, conception logicielle, réseaux, systèmes d’exploitation, architecture des ordinateurs, bases de données, probabilités et statistiques.</p><div><span>2023–2026</span><span>Finissant</span></div></div></article></div>
+    </div></section><section class="content-section" id="certifications">
+    <div>
+        <div><h2>Certifications et apprentissage</h2>
+        <p>Deux certificats obtenus ; une préparation en cours.</p></div>
+        <div><article><div class="card-media" aria-hidden="true"><img src="assets/image-5.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><h3>Google Cybersecurity Professional Certificate</h3><p>Obtenu en 2024. Formation aux fondamentaux de la cybersécurité, à l’analyse des journaux, à Linux, SQL et Python.</p><div><span>Obtenu · 2024</span></div></div></article><article><div class="card-media" aria-hidden="true"><img src="assets/image-6.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><h3>Google IT Support Professional Certificate</h3><p>Obtenu en 2024. Formation au soutien technique, aux réseaux, aux systèmes et au dépannage.</p><div><span>Obtenu · 2024</span></div></div></article><article><div class="card-media" aria-hidden="true"><img src="assets/image-7.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><h3>CompTIA Security+</h3><p>Préparation à l’examen en cours. Approfondissement des fondamentaux de sécurité, de la gestion des risques et de la cryptographie.</p><div><span>En préparation</span></div></div></article></div>
+    </div></section><section class="content-section" id="projects">
+    <div>
+        <div><h2>Projets techniques</h2>
+        <p>Mes travaux récents en cybersécurité, puis une sélection de projets de développement. Les liens mènent aux versions corrigées disponibles.</p></div>
+        <div><article><div class="card-media" aria-hidden="true"><img src="assets/image-4.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><p>Projet universitaire · 2026</p><h3>Simulation et analyse d’attaques réseau</h3><p>Laboratoire virtualisé isolé : simulation contrôlée d’ARP poisoning, de DNS spoofing et d’attaques de l’homme du milieu. Analyse du trafic, serveur TCP avec journalisation et recommandations de durcissement.</p><div><span>Python</span><span>Kali Linux</span><span>Debian</span><span>Wireshark</span><span>Scapy</span></div></div></article><article><div class="card-media" aria-hidden="true"><img src="assets/image-2.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><p>Projet universitaire · 2026</p><h3>Robustesse d’un système de détection d’intrusion</h3><p>Pipeline de détection sur 10 000 observations NSL-KDD avec Random Forest. Évaluation du rappel, du F1-score et des faux négatifs, puis mesure de la dégradation face au label flipping et aux portes dérobées.</p><div><span>Python</span><span>scikit-learn</span><span>Random Forest</span><span>NSL-KDD</span></div></div></article><article><div class="card-media" aria-hidden="true"><img src="assets/image-10.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><p>Développement et réseaux</p><h3>Client et serveur sécurisés</h3><p>Application console C# de gestion de membres : échanges TCP sur TLS, authentification, droits d’accès et persistance. Tests des scénarios réseau et des opérations sur les membres.</p><div><span>C#</span><span>.NET 8</span><span>TCP/TLS</span></div><a href="https://github.com/RoslinKenne/inf1010tp1-master-1-/tree/fix/all-projects-2026-10-02" target="_blank" rel="noopener noreferrer">Voir le code</a></div></article><article><div class="card-media" aria-hidden="true"><img src="assets/image-20.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><p>Développement logiciel</p><h3>Sérialiseur et désérialiseur JSON</h3><p>Projet Java utilisant la réflexion et des annotations pour convertir des objets, listes et tableaux. Tests des caractères échappés, des données invalides et des références cycliques.</p><div><span>Java</span><span>JSON</span><span>Réflexion</span></div><a href="https://github.com/RoslinKenne/tp2inf1035g48-master/tree/fix/all-projects-2026-10-02" target="_blank" rel="noopener noreferrer">Voir le code</a></div></article><article><div class="card-media" aria-hidden="true"><img src="assets/image-18.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><p>IA appliquée</p><h3>Jeu de la vie : standard et neuronal</h3><p>Comparaison des règles classiques avec un modèle MLP entraîné à compter les voisins. Visualisation, exécution sans interface et tests d’égalité des deux modes.</p><div><span>Python</span><span>scikit-learn</span><span>Matplotlib</span></div><a href="https://github.com/RoslinKenne/jeu-de-la-vie/tree/fix/all-projects-2026-10-02" target="_blank" rel="noopener noreferrer">Voir le code</a></div></article><article><div class="card-media" aria-hidden="true"><img src="assets/image-12.jpg" alt="" loading="lazy" decoding="async" width="600" height="350"></div><div><p>Algorithmique</p><h3>Validateur d’automates déterministes</h3><p>Application C# validant les états et les transitions d’un automate, puis évaluant des chaînes. Tests de déterminisme, de formats invalides et de chaîne vide.</p><div><span>C#</span><span>.NET 8</span><span>Algorithmes</span></div><a href="https://github.com/RoslinKenne/tp1-master-1-/tree/fix/all-projects-2026-10-02" target="_blank" rel="noopener noreferrer">Voir le code</a></div></article></div>
+    </div></section><section class="lab" id="lab"><div class="section-heading"><div><p class="eyebrow">03 / LABORATOIRE CYBERSÉCURITÉ</p><h2>Tester. Comprendre.<br><em>Aller plus loin.</em></h2></div><p>Un espace d’outils pédagogiques pour explorer la sécurité d’un domaine et comprendre les observations.</p></div><div class="lab-shell"><aside class="lab-nav"><div class="lab-brand"><span class="brand-symbol small-logo" aria-hidden="true"></span><strong>Security Lab</strong></div><span class="nav-caption">MODULES</span><button class="tool active" data-tool="tls" aria-pressed="true"><span>◈</span> HTTPS & TLS <small>01</small></button><button class="tool" data-tool="headers" aria-pressed="false"><span>≡</span> En-têtes HTTP <small>02</small></button><button class="tool" data-tool="dmarc" aria-pressed="false"><span>@</span> DNS & DMARC <small>03</small></button><button class="tool" data-tool="csp" aria-pressed="false"><span>⌘</span> Politique CSP <small>04</small></button><div class="lab-note"><span class="status-dot"></span> Aperçu interactif<p>Présentation de l’interface. Aucun scan réel.</p></div></aside><div class="lab-content"><div class="lab-content-top"><span>Laboratoire / <b id="tool-crumb">HTTPS & TLS</b></span><span class="pill">MAQUETTE</span></div><h3 id="tool-title">La sécurité commence par la connexion.</h3><p id="tool-desc">Explorer le certificat, sa validité et la configuration TLS d’un domaine public.</p><label for="domain" id="input-label">Domaine à examiner</label><div class="scan-input"><input id="domain" value="exemple.test" spellcheck="false"><button id="show-example">Voir l’aperçu <span>↗</span></button></div><div class="observations"><div><span>01</span><h4 id="check-one">Certificat</h4><p id="detail-one">Émetteur, validité et correspondance du domaine.</p></div><div><span>02</span><h4 id="check-two">Protocoles</h4><p id="detail-two">Versions TLS et paramètres observés.</p></div><div><span>03</span><h4 id="check-three">Interprétation</h4><p id="detail-three">Constats, contexte et recommandations.</p></div></div><div class="example-note" id="example-note" hidden role="status"></div><div class="source-line">Observations techniques et explications IA seront présentées séparément.</div></div></div></section>
+ <section class="assistant-band"><p class="eyebrow">LE PARCOURS, À PORTÉE DE QUESTION</p><h2>Un assistant pour vous orienter.</h2><p>La bulle en bas à droite ouvre un échange sur mon parcours, mes projets et ma disponibilité.</p><button class="primary" id="open-agent-band">Rencontrer l’assistant <span>↗</span></button></section>
+ <section class="cv-section" id="cv"><div><p class="eyebrow">05 / IDENTITÉ COMMUNE</p><h2>Le même univers.<br><em>Sur mon CV.</em></h2><p>Une déclinaison claire, sans photo, avec une lecture directe de l’expérience et des compétences.</p><a class="primary" href="CV.pdf" target="_blank" rel="noopener">Consulter le CV actuel <span>↗</span></a><p class="fine">L’aperçu ci-contre illustre la nouvelle direction visuelle ; le lien ouvre votre CV actuel.</p></div><article class="cv-paper" aria-label="Aperçu du CV assorti"><div class="cv-top"><span class="cv-mark brand-symbol" aria-hidden="true"></span><span>ZOYEM ROSLIN<br><strong>KENNE</strong></span></div><p class="cv-role">Cybersécurité · Assurance qualité · Infonuagique</p><p class="cv-contact">Trois-Rivières, QC · kenneroslin5@gmail.com</p><div class="cv-rule"></div><h3>PROFIL</h3><p>Finissant en informatique à l’UQTR. Expérience en audits Web, validation de scans et tests de sécurité.</p><h3>EXPÉRIENCE / 2026</h3><strong>Stage en assurance qualité et sécurité logicielle</strong><p>300 sites audités manuellement. Tests, analyse des résultats et documentation reproductible.</p><h3>FORMATION & CERTIFICATIONS</h3><p>UQTR · Fin prévue : décembre 2026<br>Google Cybersecurity & IT Support · 2024<br>CompTIA Security+ · En préparation</p><div class="cv-footer">DISPONIBLE EN JANVIER 2027 <span>01</span></div></article></section>
+ <section class="content-section" id="contact">
+                <div>
+                    <div>
+                        <h2>Contactez-moi</h2>
+                        <p>Premier emploi dès janvier 2027 : cybersécurité, assurance qualité, soutien informatique, réseaux ou systèmes.</p>
                     </div>
 
-                    <p class="mb-6 text-text-muted">Vous pouvez aussi écrire directement à <a class="text-primary underline" href="mailto:kenneroslin5@gmail.com">kenneroslin5@gmail.com</a>.</p>
-                    <p class="mb-6 text-sm text-text-muted">Trois-Rivières, Québec · Mobile partout au Québec · Français et anglais professionnel</p>
-                    <div class="mb-8 flex flex-wrap gap-5 text-sm"><a class="text-primary underline" href="https://www.linkedin.com/in/zoyem-roslin-kenne" target="_blank" rel="noopener noreferrer">LinkedIn</a><a class="text-primary underline" href="https://github.com/RoslinKenne" target="_blank" rel="noopener noreferrer">GitHub</a></div>
-                    <form action="https://formspree.io/f/xpqzklyp" method="POST" class="space-y-6">
-                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <p>Vous pouvez aussi écrire directement à <a href="mailto:kenneroslin5@gmail.com">kenneroslin5@gmail.com</a>.</p>
+                    <p>Trois-Rivières, Québec · Mobile partout au Québec · Français et anglais professionnel</p>
+                    <div><a href="https://www.linkedin.com/in/zoyem-roslin-kenne" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://github.com/RoslinKenne" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+                    <form action="https://formspree.io/f/xpqzklyp" method="POST">
+                        <div>
                             <div>
-                                <label for="contact-name" class="mb-2 block text-sm font-medium text-white">Nom</label>
-                                <input type="text" id="contact-name" name="name" class="w-full rounded-lg border border-white/10 bg-bg-dark p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Votre nom" required>
+                                <label for="contact-name">Nom</label>
+                                <input type="text" id="contact-name" name="name" placeholder="Votre nom" required>
                             </div>
                             <div>
-                                <label for="contact-email" class="mb-2 block text-sm font-medium text-white">Email</label>
-                                <input type="email" id="contact-email" name="email" class="w-full rounded-lg border border-white/10 bg-bg-dark p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="votre@email.com" required>
+                                <label for="contact-email">Email</label>
+                                <input type="email" id="contact-email" name="email" placeholder="votre@email.com" required>
                             </div>
                         </div>
                         <div>
-                            <label for="contact-message" class="mb-2 block text-sm font-medium text-white">Message</label>
-                            <textarea id="contact-message" name="message" rows="4" class="w-full rounded-lg border border-white/10 bg-bg-dark p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Votre message..." required></textarea>
+                            <label for="contact-message">Message</label>
+                            <textarea id="contact-message" name="message" rows="4" placeholder="Votre message..." required></textarea>
                         </div>
-                        <button type="submit" class="w-full rounded-lg bg-primary py-3.5 text-center font-bold text-white hover:bg-blue-600 transition-colors">
+                        <button type="submit">
                             Envoyer le message
                         </button>
                     </form>
                 </div>
-            </section>
+            </section><footer><a class="archive-link" href="archives/2026-10-02/">Consulter la version précédente ↗</a><div class="identity"><span class="brand-symbol" aria-hidden="true"></span><span>Zoyem Roslin Kenne<br><small>Cybersécurité & infonuagique</small></span></div><a href="mailto:kenneroslin5@gmail.com">Construisons la suite. ↗</a><span>© 2026 Zoyem Roslin Kenne</span></footer>
+ </main>
+</div><div class="agent-widget"><button id="agent-launcher" class="agent-launcher" aria-label="Ouvrir l’assistant du portfolio" aria-expanded="false" aria-controls="agent-window"><span class="agent-face" aria-hidden="true"><i></i><i></i></span><span class="agent-spark" aria-hidden="true">✦</span></button><span class="agent-hint" id="agent-hint">Une question ?</span><section id="agent-window" class="agent-window" role="dialog" aria-label="Assistant du portfolio" hidden><header><span class="agent-avatar" aria-hidden="true"><span class="agent-face"><i></i><i></i></span></span><div><strong>Votre assistant</strong><small>Le nom sera choisi ensemble</small></div><button id="agent-close" aria-label="Fermer l’assistant">×</button></header><div class="agent-conversation" id="agent-conversation" aria-live="polite"><div class="agent-message"><strong>Bonjour, bienvenue !</strong><p>Je peux vous présenter le parcours de Zoyem, vous orienter vers ses projets cyber et expliquer les outils du laboratoire.</p></div></div><div class="agent-questions"><button data-agent="projects">Ses projets cyber</button><button data-agent="stage">Son expérience</button><button data-agent="availability">Sa disponibilité</button></div><form id="agent-form"><label class="sr-only" for="agent-input">Votre question</label><input id="agent-input" placeholder="Posez une question…" autocomplete="off" maxlength="300"><button aria-label="Envoyer la question">↑</button></form><p class="agent-disclosure">Assistant de démonstration · Informations du portfolio</p></section></div><button class="back-top" aria-label="Revenir en haut" hidden>↑</button><script src="refined.js"></script><script src="teleport.js"></script></body></html>
 
-        </main>
-
-        <footer class="border-t border-white/10 bg-bg-dark py-12">
-            <div class="mx-auto max-w-7xl px-4 text-center">
-                <p class="text-sm text-text-muted">© 2026 Zoyem Roslin Kenne. Tous droits réservés.</p>
-            </div>
-        </footer>
-
-        <button aria-label="Retour en haut" type="button" id="backToTop" onclick="scrollToTop()" class="fixed bottom-8 right-8 z-50 rounded-full bg-primary p-3 text-white shadow-lg transition-all duration-300 opacity-0 translate-y-10 hover:bg-blue-600">
-            <span class="material-symbols-outlined">↑</span>
-        </button>
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const menuButton = document.getElementById('menuToggle');
-            const mobileNav = document.getElementById('mobileNav');
-            function closeMenu() {
-                mobileNav.hidden = true;
-                menuButton.setAttribute('aria-expanded', 'false');
-                menuButton.setAttribute('aria-label', 'Ouvrir le menu');
-            }
-            menuButton.addEventListener('click', () => {
-                const open = menuButton.getAttribute('aria-expanded') !== 'true';
-                mobileNav.hidden = !open;
-                menuButton.setAttribute('aria-expanded', String(open));
-                menuButton.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
-            });
-            mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
-            document.addEventListener('keydown', event => {
-                if (event.key === 'Escape' && !mobileNav.hidden) {
-                    closeMenu();
-                    menuButton.focus();
-                }
-            });
-            if (!reducedMotion && 'IntersectionObserver' in window) {
-                const observer = new IntersectionObserver(entries => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.1 });
-                document.querySelectorAll('.fade-in-up').forEach(el => {
-                    el.classList.add('animate-entry');
-                    observer.observe(el);
-                });
-            }
-
-            // 2. Machine à écrire
-            const textElement = document.getElementById('typewriter');
-            const phrases = ["Cybersécurité & assurance qualité", "Audits Web & tests de sécurité", "Réseaux & systèmes"];
-            let phraseIndex = 0; let charIndex = 0; let isDeleting = false; let typeSpeed = 100;
-
-            function type() {
-                const currentPhrase = phrases[phraseIndex];
-                if (isDeleting) {
-                    textElement.textContent = currentPhrase.substring(0, charIndex - 1);
-                    charIndex--;
-                    typeSpeed = 50;
-                } else {
-                    textElement.textContent = currentPhrase.substring(0, charIndex + 1);
-                    charIndex++;
-                    typeSpeed = 100;
-                }
-                if (!isDeleting && charIndex === currentPhrase.length) {
-                    isDeleting = true; typeSpeed = 2000;
-                } else if (isDeleting && charIndex === 0) {
-                    isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500;
-                }
-                setTimeout(type, typeSpeed);
-            }
-            if (textElement && !reducedMotion) type();
-
-            // 3. ScrollSpy & BackToTop
-            const sections = document.querySelectorAll("section");
-            const navLinks = document.querySelectorAll(".nav-link");
-            const backToTopBtn = document.getElementById("backToTop");
-
-            window.addEventListener("scroll", () => {
-                let current = "";
-                sections.forEach((section) => {
-                    const sectionTop = section.offsetTop;
-                    if (scrollY >= sectionTop - 150) {
-                        current = section.getAttribute("id");
-                    }
-                });
-                navLinks.forEach((link) => {
-                    link.classList.remove("text-primary");
-                    if (current && link.getAttribute("href") === "#" + current) {
-                        link.classList.add("text-primary");
-                    }
-                });
-
-                if (window.scrollY > 500) {
-                    backToTopBtn.classList.remove("opacity-0", "translate-y-10");
-                } else {
-                    backToTopBtn.classList.add("opacity-0", "translate-y-10");
-                }
-            });
-        });
-
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
-</body>
-</html>
