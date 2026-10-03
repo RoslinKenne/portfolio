@@ -24,8 +24,21 @@ function openAgent(){agentWindow.hidden=false;launcher.setAttribute('aria-expand
 function closeAgent(){agentWindow.hidden=true;launcher.setAttribute('aria-expanded','false');launcher.focus()}
 launcher.addEventListener('click',()=>agentWindow.hidden?openAgent():closeAgent());document.querySelector('#agent-close').addEventListener('click',closeAgent);document.querySelector('#open-agent-band').addEventListener('click',openAgent);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!agentWindow.hidden)closeAgent()});
 function appendMessage(text,user=false){const e=document.createElement('div');e.className='agent-message'+(user?' user-message':'');e.textContent=text;const box=document.querySelector('#agent-conversation');box.append(e);box.scrollTop=box.scrollHeight}
-document.querySelectorAll('[data-agent]').forEach(b=>b.addEventListener('click',()=>{appendMessage(b.textContent,true);appendMessage(replies[b.dataset.agent])}));
-document.querySelector('#agent-form').addEventListener('submit',e=>{e.preventDefault();const value=agentInput.value.trim();if(!value)return;appendMessage(value,true);agentInput.value='';const q=value.toLowerCase();const key=/disponib|janvier|emploi/.test(q)?'availability':/stage|expérience|audit/.test(q)?'stage':/projet|cyber/.test(q)?'projects':null;appendMessage(key?replies[key]:'Je fonctionne ici en mode aperçu. Essayez une question sur les projets, le stage ou la disponibilité. Pour une autre question, utilisez le lien de contact du portfolio.');});
+let assistantModule, chatBusy=false;const questionTimes=[];
+async function sendAgentQuestion(value){
+ if(chatBusy||!value.trim())return;
+ value=value.trim().slice(0,300);const now=Date.now();while(questionTimes.length&&now-questionTimes[0]>60000)questionTimes.shift();
+ if(questionTimes.length>=6){appendMessage('Un petit instant : vous pourrez poser une autre question dans une minute.');return;}
+ questionTimes.push(now);chatBusy=true;agentInput.value='';appendMessage(value,true);
+ const controls=[agentInput,...document.querySelectorAll('[data-agent],#agent-form button')];controls.forEach(el=>el.disabled=true);
+ const status=document.createElement('div');status.className='agent-message agent-pending';status.textContent='L’assistant prépare sa réponse…';document.querySelector('#agent-conversation').append(status);
+ document.querySelector('#agent-form').setAttribute('aria-busy','true');
+ try{assistantModule=assistantModule||import('./assistant.bundle.js');const {ask}=await assistantModule;status.textContent=await ask(value);}
+ catch(error){assistantModule=undefined;console.warn('Assistant unavailable:',error.code||error.message);status.textContent=/429|quota|resource.exhausted/i.test(error.message)?'La limite de requêtes est atteinte. Réessayez plus tard ou utilisez le formulaire de contact.':'L’assistant est momentanément indisponible. Réessayez plus tard ou utilisez le formulaire de contact.';status.classList.add('agent-error');}
+ finally{status.classList.remove('agent-pending');controls.forEach(el=>el.disabled=false);document.querySelector('#agent-form').removeAttribute('aria-busy');chatBusy=false;const box=document.querySelector('#agent-conversation');box.scrollTop=box.scrollHeight;if(!agentWindow.hidden)agentInput.focus();}
+}
+document.querySelectorAll('[data-agent]').forEach(b=>b.addEventListener('click',()=>sendAgentQuestion(b.textContent)));
+document.querySelector('#agent-form').addEventListener('submit',e=>{e.preventDefault();sendAgentQuestion(agentInput.value)});
 
 // Layout only: source content is kept verbatim.
 document.querySelectorAll('.content-section').forEach(section=>{
