@@ -54,6 +54,9 @@
 
 /* The same blue, mauve and peach blend throughout, with slightly smaller cards. */
 .site{--section-blend:radial-gradient(ellipse at 12% 15%,#bdd9ee88,transparent 55%),radial-gradient(ellipse at 88% 75%,#e4c6ef99,transparent 50%),#f8f1e8;--surface-blend:radial-gradient(ellipse at 0% 5%,#cee4f5cc,transparent 65%),radial-gradient(ellipse at 100% 90%,#e7d2f1bb,transparent 65%),linear-gradient(140deg,#fffdf7,#f6e4d8)}
+.site main{max-width:none;width:100%;margin:0}
+.lab>.section-heading{max-width:82rem;margin-left:auto;margin-right:auto}
+@media(min-width:761px){.cv-section{grid-template-columns:minmax(0,36rem) minmax(0,38rem);justify-content:center}}
 html[data-design=e] .hero{background:var(--section-blend)}
 .site :is(#about,#experience,#skills,#education,#certifications,#projects,#contact,.lab,.assistant-band,.cv-section,footer){background:var(--section-blend)}
 html[data-design=e] .hero .hero-visual{max-width:64rem;width:100%;min-height:20.5rem;padding:1.75rem 2rem;border-radius:2.2rem;background:linear-gradient(120deg,#d0e7ef,#e4e9d9 55%,#f5daca);border-color:#9fb9b8!important;border-bottom-color:#8ea6a6!important;margin-top:1.75rem;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
@@ -99,6 +102,26 @@ html[data-design=e] .hero .orbit{height:13rem}
 .cv-paper{padding:2.125rem;border-radius:1.5rem;background:var(--surface-blend)}
 .cv-paper h3{font-size:1rem}.cv-paper strong{font-size:1.125rem}
 .agent-window{width:26.5rem}
+/* Layered highlights and shadows give the assistant depth without tilting text. */
+.agent-launcher{border:1px solid #edc6a9;background:radial-gradient(circle at 28% 18%,#efbd8a 0,#c9784a 30%,#964829 65%,#592b22 100%);box-shadow:0 18px 28px -10px #3c253966,0 6px 0 #683c2c,0 2px 4px #fff5daaa inset,0 -8px 12px #4c252b55 inset}
+.agent-launcher .agent-face{background:#fff6dd1a;box-shadow:0 3px 7px #48231b55,0 1px 2px #fff4dc80 inset}
+.agent-window{border:1px solid #fafaf3;border-radius:1.5rem;background:radial-gradient(ellipse at 0 0,#e3f1f2,transparent 65%),linear-gradient(145deg,#fffdf8,#f2e7df);box-shadow:0 28px 65px -15px #173f4766,0 7px 0 #c0c8c3,0 9px 1px #ffffffb3,0 1px 2px #fff inset}
+.agent-window header{background:linear-gradient(125deg,#d0e7e6,#e1e9eb 65%,#ecdbef);border-bottom:1px solid #afc9c6;box-shadow:0 1px 0 #ffffffb3 inset}
+.agent-avatar{width:3rem;height:3rem;flex-shrink:0;background:radial-gradient(circle at 30% 20%,#4d9294,#245761 55%,#173f47);border:1px solid #ffffffaa;box-shadow:0 5px 0 #14343c,0 9px 14px -5px #173f4755,0 2px 3px #ffffff66 inset}
+.agent-window header button{background:#ffffff70;border:1px solid #b5c7c7;border-radius:.75rem;color:#24494e;box-shadow:0 3px 0 #b5c7c7,0 1px 0 #fff inset}
+.agent-message{border:1px solid #d2ded7;background:linear-gradient(145deg,#ffffffed,#e6efe7);box-shadow:0 3px 0 #d3ddd4,0 7px 15px -10px #173f4744}
+.agent-message.user-message{background:linear-gradient(135deg,#b16a45,#854329);border-color:#965337;box-shadow:0 3px 0 #693728}
+.agent-questions{gap:.6rem}
+.agent-questions button{background:linear-gradient(145deg,#fffcf6,#efdfd0);border:1px solid #c5b5a4;box-shadow:0 3px 0 #cdb9a6,0 1px 0 #fff inset;transition:transform .15s,box-shadow .15s}
+.agent-questions button:hover{transform:translateY(-1px);box-shadow:0 4px 0 #cdb9a6,0 6px 12px -8px #69372866}
+.agent-questions button:active{transform:translateY(2px);box-shadow:0 1px 0 #cdb9a6}
+.agent-window form{background:#fffdf8;border:1px solid #b5c9c4;box-shadow:0 2px 4px #173f4715 inset}
+.agent-window form button{background:linear-gradient(145deg,#bd794f,#88442b);box-shadow:0 3px 0 #693728,0 1px 0 #efc6a3 inset}
+.agent-message.formatted-reply{white-space:normal}
+.formatted-reply p{margin:0 0 .7rem}.formatted-reply p:last-child{margin-bottom:0}
+.formatted-reply ul{margin:.25rem 0 .75rem;padding-left:1.2rem}.formatted-reply li{margin:.6rem 0}.formatted-reply li::marker{color:#265861}
+.formatted-reply strong{color:#173f47}.formatted-reply code{font-size:.9em;background:#dce7e5;border-radius:.25rem;padding:.1rem .3rem;overflow-wrap:anywhere}
+@media(prefers-reduced-motion:reduce){.agent-questions button{transition:none;transform:none!important}}
 @media(max-width:1100px){.lab-shell{grid-template-columns:13rem minmax(0,1fr)}.lab-content{padding:1.5rem}}
 @media(max-width:800px){
  .card-grid,#projects .card-grid{grid-template-columns:1fr;gap:1.5rem}

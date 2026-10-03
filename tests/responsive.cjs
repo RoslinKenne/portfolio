@@ -10,6 +10,7 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict');
   }
   assert.ok(Math.max(...offsets)-Math.min(...offsets)<1,'Typing must not shift the paragraph');
   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'No horizontal overflow');
+  assert.ok(await p.locator('.site main').evaluate(el=>{const r=el.getBoundingClientRect();return Math.abs(r.left)<1&&Math.abs(r.right-innerWidth)<1}),'Colored sections reach both screen edges');
   const belowName=await p.locator('.original-hero h1').evaluate(el=>{const range=document.createRange();range.selectNodeContents(el.firstChild);return el.querySelector('.typing-line').getBoundingClientRect().top>=range.getBoundingClientRect().bottom});assert.ok(belowName,'Subtitle stays below the name');
   const bubble=await p.locator('#agent-launcher').boundingBox();assert.ok(bubble.width>=72,'Readable assistant launcher');
   await p.locator('#agent-launcher').click();await p.waitForTimeout(100);

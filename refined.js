@@ -26,6 +26,12 @@ document.addEventListener('pointerdown',e=>{if(!agentWindow.hidden&&!agentWindow
 launcher.addEventListener('click',()=>agentWindow.hidden?openAgent():closeAgent());document.querySelector('#agent-close').addEventListener('click',closeAgent);document.querySelector('#open-agent-band').addEventListener('click',openAgent);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!agentWindow.hidden)closeAgent()});
 function appendMessage(text,user=false){const e=document.createElement('div');e.className='agent-message'+(user?' user-message':'');e.textContent=text;const box=document.querySelector('#agent-conversation');box.append(e);box.scrollTop=box.scrollHeight}
 let assistantModule, chatBusy=false;const questionTimes=[];
+function formatAgentReply(element,text){
+ // Construct elements with textContent: model output never becomes executable HTML.
+ element.replaceChildren();element.classList.add('formatted-reply');
+ const inline=(parent,value)=>{let offset=0;for(const match of value.matchAll(/\*\*([^*\n]+)\*\*|\*([^*\n]+)\*|`([^`\n]+)`/g)){parent.append(document.createTextNode(value.slice(offset,match.index)));const node=document.createElement(match[1]?'strong':match[2]?'em':'code');node.textContent=match[1]||match[2]||match[3];parent.append(node);offset=match.index+match[0].length;}parent.append(document.createTextNode(value.slice(offset)));};
+ let list=null;for(const line of text.split('\n')){if(!line.trim()){list=null;continue;}const bullet=line.match(/^\s*[-*]\s+(.+)$/);if(bullet){if(!list){list=document.createElement('ul');element.append(list);}const item=document.createElement('li');inline(item,bullet[1]);list.append(item);}else{list=null;const paragraph=document.createElement('p');inline(paragraph,line);element.append(paragraph);}}
+}
 async function sendAgentQuestion(value){
  if(chatBusy||!value.trim())return;
  value=value.trim().slice(0,300);const now=Date.now();while(questionTimes.length&&now-questionTimes[0]>60000)questionTimes.shift();
@@ -34,7 +40,7 @@ async function sendAgentQuestion(value){
  const controls=[agentInput,...document.querySelectorAll('[data-agent],#agent-form button')];controls.forEach(el=>el.disabled=true);
  const status=document.createElement('div');status.className='agent-message agent-pending';status.textContent='L’assistant prépare sa réponse…';document.querySelector('#agent-conversation').append(status);
  document.querySelector('#agent-form').setAttribute('aria-busy','true');
- try{assistantModule=assistantModule||import('./assistant.bundle.js');const {ask}=await assistantModule;status.textContent=await ask(value);}
+ try{assistantModule=assistantModule||import('./assistant.bundle.js');const {ask}=await assistantModule;formatAgentReply(status,await ask(value));}
  catch(error){assistantModule=undefined;console.warn('Assistant unavailable:',error.code||error.message);status.textContent=/429|quota|resource.exhausted/i.test(error.message)?'La limite de requêtes est atteinte. Réessayez plus tard ou utilisez le formulaire de contact.':'L’assistant est momentanément indisponible. Réessayez plus tard ou utilisez le formulaire de contact.';status.classList.add('agent-error');}
  finally{status.classList.remove('agent-pending');controls.forEach(el=>el.disabled=false);document.querySelector('#agent-form').removeAttribute('aria-busy');chatBusy=false;const box=document.querySelector('#agent-conversation');box.scrollTop=box.scrollHeight;if(!agentWindow.hidden)agentInput.focus();}
 }
