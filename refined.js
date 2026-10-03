@@ -21,7 +21,8 @@ motionToggle.checked=!reduced.matches;motionToggle.addEventListener('change',app
 if('IntersectionObserver' in window&&!reduced.matches){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('shown');observer.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll('.content-section article,.content-section>div,.section-heading,.lab-shell,.cv-paper').forEach(el=>{el.classList.add('scroll-reveal');observer.observe(el)})}
 const launcher=document.querySelector('#agent-launcher'),agentWindow=document.querySelector('#agent-window'),agentInput=document.querySelector('#agent-input');
 function openAgent(){agentWindow.hidden=false;launcher.setAttribute('aria-expanded','true');document.querySelector('#agent-hint').hidden=true;agentInput.focus()}
-function closeAgent(){agentWindow.hidden=true;launcher.setAttribute('aria-expanded','false');launcher.focus()}
+function closeAgent(restoreFocus=true){agentWindow.hidden=true;launcher.setAttribute('aria-expanded','false');if(restoreFocus)launcher.focus()}
+document.addEventListener('pointerdown',e=>{if(!agentWindow.hidden&&!agentWindow.contains(e.target)&&!launcher.contains(e.target)&&!e.target.closest('#open-agent-band'))closeAgent(false)});
 launcher.addEventListener('click',()=>agentWindow.hidden?openAgent():closeAgent());document.querySelector('#agent-close').addEventListener('click',closeAgent);document.querySelector('#open-agent-band').addEventListener('click',openAgent);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!agentWindow.hidden)closeAgent()});
 function appendMessage(text,user=false){const e=document.createElement('div');e.className='agent-message'+(user?' user-message':'');e.textContent=text;const box=document.querySelector('#agent-conversation');box.append(e);box.scrollTop=box.scrollHeight}
 let assistantModule, chatBusy=false;const questionTimes=[];

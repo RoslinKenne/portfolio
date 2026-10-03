@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build-assistant.cjs && node scripts/check-build.cjs",
-    "test": "node tests/browser.cjs"
+    "test": "node tests/browser.cjs && node tests/responsive.cjs"
   },
   "devDependencies": {
     "esbuild": "0.28.2",
